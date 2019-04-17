@@ -17,14 +17,50 @@ import javax.servlet.http.HttpServletResponse;
 import com.arti_reply.model.Arti_replyService;
 import com.article.model.ArticleService;
 import com.artireply_report.model.ArtiReplyReportService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@WebServlet("/FrontEnd/forum/arti_reply.do")
-public class Arti_replyServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+//@WebServlet("/FrontEnd/forum/arti_reply.do")
+@Controller
+@RequestMapping("ArtiReply")
+public class Arti_replyServlet {
+
+	@Autowired
+    private Arti_replyService arti_replySvc;
+	@Autowired
+	private ArtiReplyReportService artireply_reportSvc;
+
+	@RequestMapping(value = "/insert",method = RequestMethod.POST)
+	public String insert(@RequestParam("mem_no") String mem_no,
+	 @RequestParam("arti_no") String arti_no,@RequestParam("rep_content") String rep_content,
+	 Model model){
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		if(StringUtils.isBlank(rep_content)){
+			errorMsgs.put("rep_content","回覆內容請勿空白");
+		}
+		if(!errorMsgs.isEmpty()){
+			return "article";
+		}
+
+	}
+
+	@RequestMapping(value = "/delete",method = RequestMethod.POST)
+	public String insert(@RequestParam("arti_no") String arti_no,
+						 @RequestParam("rep_no") String rep_no,
+						 Model model){
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		if(StringUtils.isBlank(rep_content)){
+			errorMsgs.put("rep_content","回覆內容請勿空白");
+		}
+		if(!errorMsgs.isEmpty()){
+			return "article";
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -35,31 +71,7 @@ public class Arti_replyServlet extends HttpServlet {
 		
 		if ("insert".equals(action)) { // 來自article.jsp的請求  
 			   
-			   Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			   req.setAttribute("errorMsgs", errorMsgs);
 
-			   try {
-			    /***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-			    String mem_no = req.getParameter("mem_no");
-				String arti_no = req.getParameter("arti_no").trim();
-				System.out.println(arti_no);
-			    String rep_content = req.getParameter("rep_content");
-			    if (rep_content == null || rep_content.trim().length() == 0) {
-			     errorMsgs.put("rep_content","回覆內容請勿空白");
-			    } 
-			    
-			    Timestamp rep_time = new Timestamp(System.currentTimeMillis());
-			     
-			
-			
-			    // Send the use back to the form, if there were errors
-			    if (!errorMsgs.isEmpty()) {
-			     RequestDispatcher failureView = req
-			       .getRequestDispatcher("/FrontEnd/forum/article.jsp");
-			     failureView.forward(req, res);
-			     return;
-			    }
-			    
 			    /***************************2.開始新增資料***************************************/
 			    Arti_replyService arti_replySvc = new Arti_replyService();
 			    arti_replySvc.addRep(mem_no,rep_content, rep_time, arti_no);
