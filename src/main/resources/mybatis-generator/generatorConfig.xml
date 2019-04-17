@@ -23,7 +23,7 @@
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage ="com.ca102g1.springboot.mapper"
-                       targetProject="src/main/resources/mybatis-generator" >
+                       targetProject="src/main/java" >
           <property name ="enableSubPackages" value ="true" />
         </sqlMapGenerator >
 

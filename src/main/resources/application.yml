@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: Instabuy
+    password: oracle
+    hikari:
+      max-lifetime: 200000
+      idle-timeout: 100000
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  http:
+    encoding:
+      charset: UTF-8
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+
+server:
+  port: 8080
+  servlet:
+    context-path: CA102G1WithSpringBoot
