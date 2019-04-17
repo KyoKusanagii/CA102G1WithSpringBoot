@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.MallOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.MallOrder" >
+    <id column="MALL_ORDER_NO" property="mallOrderNo" jdbcType="VARCHAR" />
+    <result column="MALL_BUYER_NO" property="mallBuyerNo" jdbcType="VARCHAR" />
+    <result column="MALL_ORDER_TIME" property="mallOrderTime" jdbcType="TIMESTAMP" />
+    <result column="MALL_ORDER_PRC" property="mallOrderPrc" jdbcType="NUMERIC" />
+    <result column="MALL_ORDER_TRANS" property="mallOrderTrans" jdbcType="VARCHAR" />
+    <result column="MALL_ORDER_STATUS" property="mallOrderStatus" jdbcType="VARCHAR" />
+    <result column="MALL_PAY_STATUS" property="mallPayStatus" jdbcType="VARCHAR" />
+    <result column="MALL_ORDER_REMARK" property="mallOrderRemark" jdbcType="VARCHAR" />
+    <result column="MALL_TRANSPORT" property="mallTransport" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MALL_ORDER_NO, MALL_BUYER_NO, MALL_ORDER_TIME, MALL_ORDER_PRC, MALL_ORDER_TRANS, 
+    MALL_ORDER_STATUS, MALL_PAY_STATUS, MALL_ORDER_REMARK, MALL_TRANSPORT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.MallOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MALL_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MALL_ORDER
+    where MALL_ORDER_NO = #{mallOrderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MALL_ORDER
+    where MALL_ORDER_NO = #{mallOrderNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.MallOrderExample" >
+    delete from MALL_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.MallOrder" >
+    insert into MALL_ORDER (MALL_ORDER_NO, MALL_BUYER_NO, MALL_ORDER_TIME, 
+      MALL_ORDER_PRC, MALL_ORDER_TRANS, MALL_ORDER_STATUS, 
+      MALL_PAY_STATUS, MALL_ORDER_REMARK, MALL_TRANSPORT
+      )
+    values (#{mallOrderNo,jdbcType=VARCHAR}, #{mallBuyerNo,jdbcType=VARCHAR}, #{mallOrderTime,jdbcType=TIMESTAMP}, 
+      #{mallOrderPrc,jdbcType=NUMERIC}, #{mallOrderTrans,jdbcType=VARCHAR}, #{mallOrderStatus,jdbcType=VARCHAR}, 
+      #{mallPayStatus,jdbcType=VARCHAR}, #{mallOrderRemark,jdbcType=VARCHAR}, #{mallTransport,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.MallOrder" >
+    insert into MALL_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mallOrderNo != null" >
+        MALL_ORDER_NO,
+      </if>
+      <if test="mallBuyerNo != null" >
+        MALL_BUYER_NO,
+      </if>
+      <if test="mallOrderTime != null" >
+        MALL_ORDER_TIME,
+      </if>
+      <if test="mallOrderPrc != null" >
+        MALL_ORDER_PRC,
+      </if>
+      <if test="mallOrderTrans != null" >
+        MALL_ORDER_TRANS,
+      </if>
+      <if test="mallOrderStatus != null" >
+        MALL_ORDER_STATUS,
+      </if>
+      <if test="mallPayStatus != null" >
+        MALL_PAY_STATUS,
+      </if>
+      <if test="mallOrderRemark != null" >
+        MALL_ORDER_REMARK,
+      </if>
+      <if test="mallTransport != null" >
+        MALL_TRANSPORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mallOrderNo != null" >
+        #{mallOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mallBuyerNo != null" >
+        #{mallBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderTime != null" >
+        #{mallOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mallOrderPrc != null" >
+        #{mallOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="mallOrderTrans != null" >
+        #{mallOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderStatus != null" >
+        #{mallOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mallPayStatus != null" >
+        #{mallPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderRemark != null" >
+        #{mallOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mallTransport != null" >
+        #{mallTransport,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.MallOrderExample" resultType="java.lang.Integer" >
+    select count(*) from MALL_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MALL_ORDER
+    <set >
+      <if test="record.mallOrderNo != null" >
+        MALL_ORDER_NO = #{record.mallOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallBuyerNo != null" >
+        MALL_BUYER_NO = #{record.mallBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallOrderTime != null" >
+        MALL_ORDER_TIME = #{record.mallOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mallOrderPrc != null" >
+        MALL_ORDER_PRC = #{record.mallOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="record.mallOrderTrans != null" >
+        MALL_ORDER_TRANS = #{record.mallOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallOrderStatus != null" >
+        MALL_ORDER_STATUS = #{record.mallOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallPayStatus != null" >
+        MALL_PAY_STATUS = #{record.mallPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallOrderRemark != null" >
+        MALL_ORDER_REMARK = #{record.mallOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mallTransport != null" >
+        MALL_TRANSPORT = #{record.mallTransport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MALL_ORDER
+    set MALL_ORDER_NO = #{record.mallOrderNo,jdbcType=VARCHAR},
+      MALL_BUYER_NO = #{record.mallBuyerNo,jdbcType=VARCHAR},
+      MALL_ORDER_TIME = #{record.mallOrderTime,jdbcType=TIMESTAMP},
+      MALL_ORDER_PRC = #{record.mallOrderPrc,jdbcType=NUMERIC},
+      MALL_ORDER_TRANS = #{record.mallOrderTrans,jdbcType=VARCHAR},
+      MALL_ORDER_STATUS = #{record.mallOrderStatus,jdbcType=VARCHAR},
+      MALL_PAY_STATUS = #{record.mallPayStatus,jdbcType=VARCHAR},
+      MALL_ORDER_REMARK = #{record.mallOrderRemark,jdbcType=VARCHAR},
+      MALL_TRANSPORT = #{record.mallTransport,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.MallOrder" >
+    update MALL_ORDER
+    <set >
+      <if test="mallBuyerNo != null" >
+        MALL_BUYER_NO = #{mallBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderTime != null" >
+        MALL_ORDER_TIME = #{mallOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mallOrderPrc != null" >
+        MALL_ORDER_PRC = #{mallOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="mallOrderTrans != null" >
+        MALL_ORDER_TRANS = #{mallOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderStatus != null" >
+        MALL_ORDER_STATUS = #{mallOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mallPayStatus != null" >
+        MALL_PAY_STATUS = #{mallPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mallOrderRemark != null" >
+        MALL_ORDER_REMARK = #{mallOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="mallTransport != null" >
+        MALL_TRANSPORT = #{mallTransport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MALL_ORDER_NO = #{mallOrderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.MallOrder" >
+    update MALL_ORDER
+    set MALL_BUYER_NO = #{mallBuyerNo,jdbcType=VARCHAR},
+      MALL_ORDER_TIME = #{mallOrderTime,jdbcType=TIMESTAMP},
+      MALL_ORDER_PRC = #{mallOrderPrc,jdbcType=NUMERIC},
+      MALL_ORDER_TRANS = #{mallOrderTrans,jdbcType=VARCHAR},
+      MALL_ORDER_STATUS = #{mallOrderStatus,jdbcType=VARCHAR},
+      MALL_PAY_STATUS = #{mallPayStatus,jdbcType=VARCHAR},
+      MALL_ORDER_REMARK = #{mallOrderRemark,jdbcType=VARCHAR},
+      MALL_TRANSPORT = #{mallTransport,jdbcType=VARCHAR}
+    where MALL_ORDER_NO = #{mallOrderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

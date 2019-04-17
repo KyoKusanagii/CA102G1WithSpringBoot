@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Article" >
+    <id column="ARTI_NO" property="artiNo" jdbcType="VARCHAR" />
+    <result column="ARTI_TOPIC" property="artiTopic" jdbcType="VARCHAR" />
+    <result column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
+    <result column="PO_TIME" property="poTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Article" extends="BaseResultMap" >
+    <result column="ARTI_CONTENT" property="artiContent" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ARTI_NO, ARTI_TOPIC, MEM_NO, PO_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    ARTI_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ARTICLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ARTICLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ARTICLE
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ARTICLE
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ArticleExample" >
+    delete from ARTICLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Article" >
+    insert into ARTICLE (ARTI_NO, ARTI_TOPIC, MEM_NO, 
+      PO_TIME, ARTI_CONTENT)
+    values (#{artiNo,jdbcType=VARCHAR}, #{artiTopic,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR}, 
+      #{poTime,jdbcType=TIMESTAMP}, #{artiContent,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Article" >
+    insert into ARTICLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="artiNo != null" >
+        ARTI_NO,
+      </if>
+      <if test="artiTopic != null" >
+        ARTI_TOPIC,
+      </if>
+      <if test="memNo != null" >
+        MEM_NO,
+      </if>
+      <if test="poTime != null" >
+        PO_TIME,
+      </if>
+      <if test="artiContent != null" >
+        ARTI_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="artiNo != null" >
+        #{artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="artiTopic != null" >
+        #{artiTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null" >
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="poTime != null" >
+        #{poTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="artiContent != null" >
+        #{artiContent,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ArticleExample" resultType="java.lang.Integer" >
+    select count(*) from ARTICLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ARTICLE
+    <set >
+      <if test="record.artiNo != null" >
+        ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artiTopic != null" >
+        ARTI_TOPIC = #{record.artiTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null" >
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poTime != null" >
+        PO_TIME = #{record.poTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.artiContent != null" >
+        ARTI_CONTENT = #{record.artiContent,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update ARTICLE
+    set ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      ARTI_TOPIC = #{record.artiTopic,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      PO_TIME = #{record.poTime,jdbcType=TIMESTAMP},
+      ARTI_CONTENT = #{record.artiContent,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ARTICLE
+    set ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      ARTI_TOPIC = #{record.artiTopic,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      PO_TIME = #{record.poTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Article" >
+    update ARTICLE
+    <set >
+      <if test="artiTopic != null" >
+        ARTI_TOPIC = #{artiTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null" >
+        MEM_NO = #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="poTime != null" >
+        PO_TIME = #{poTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="artiContent != null" >
+        ARTI_CONTENT = #{artiContent,jdbcType=CLOB},
+      </if>
+    </set>
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Article" >
+    update ARTICLE
+    set ARTI_TOPIC = #{artiTopic,jdbcType=VARCHAR},
+      MEM_NO = #{memNo,jdbcType=VARCHAR},
+      PO_TIME = #{poTime,jdbcType=TIMESTAMP},
+      ARTI_CONTENT = #{artiContent,jdbcType=CLOB}
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Article" >
+    update ARTICLE
+    set ARTI_TOPIC = #{artiTopic,jdbcType=VARCHAR},
+      MEM_NO = #{memNo,jdbcType=VARCHAR},
+      PO_TIME = #{poTime,jdbcType=TIMESTAMP}
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

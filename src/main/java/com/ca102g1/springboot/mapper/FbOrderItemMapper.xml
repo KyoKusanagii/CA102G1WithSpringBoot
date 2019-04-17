@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.FbOrderItemMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.FbOrderItem" >
+    <id column="FB_ORDER_NO" property="fbOrderNo" jdbcType="VARCHAR" />
+    <id column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+    <result column="FB_ITEM_CNT" property="fbItemCnt" jdbcType="NUMERIC" />
+    <result column="FB_ITEM_PRC" property="fbItemPrc" jdbcType="NUMERIC" />
+    <result column="FB_COMMENT" property="fbComment" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.FbOrderItem" extends="BaseResultMap" >
+    <result column="FB_ITEM_PIC" property="fbItemPic" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FB_ORDER_NO, ITEM_NO, FB_ITEM_CNT, FB_ITEM_PRC, FB_COMMENT
+  </sql>
+  <sql id="Blob_Column_List" >
+    FB_ITEM_PIC
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.FbOrderItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from FB_ORDER_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.FbOrderItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from FB_ORDER_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.FbOrderItemKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from FB_ORDER_ITEM
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+      and ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.FbOrderItemKey" >
+    delete from FB_ORDER_ITEM
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+      and ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.FbOrderItemExample" >
+    delete from FB_ORDER_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.FbOrderItem" >
+    insert into FB_ORDER_ITEM (FB_ORDER_NO, ITEM_NO, FB_ITEM_CNT, 
+      FB_ITEM_PRC, FB_COMMENT, FB_ITEM_PIC
+      )
+    values (#{fbOrderNo,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{fbItemCnt,jdbcType=NUMERIC}, 
+      #{fbItemPrc,jdbcType=NUMERIC}, #{fbComment,jdbcType=VARCHAR}, #{fbItemPic,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.FbOrderItem" >
+    insert into FB_ORDER_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fbOrderNo != null" >
+        FB_ORDER_NO,
+      </if>
+      <if test="itemNo != null" >
+        ITEM_NO,
+      </if>
+      <if test="fbItemCnt != null" >
+        FB_ITEM_CNT,
+      </if>
+      <if test="fbItemPrc != null" >
+        FB_ITEM_PRC,
+      </if>
+      <if test="fbComment != null" >
+        FB_COMMENT,
+      </if>
+      <if test="fbItemPic != null" >
+        FB_ITEM_PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fbOrderNo != null" >
+        #{fbOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fbItemCnt != null" >
+        #{fbItemCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="fbItemPrc != null" >
+        #{fbItemPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="fbComment != null" >
+        #{fbComment,jdbcType=VARCHAR},
+      </if>
+      <if test="fbItemPic != null" >
+        #{fbItemPic,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.FbOrderItemExample" resultType="java.lang.Integer" >
+    select count(*) from FB_ORDER_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update FB_ORDER_ITEM
+    <set >
+      <if test="record.fbOrderNo != null" >
+        FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemNo != null" >
+        ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbItemCnt != null" >
+        FB_ITEM_CNT = #{record.fbItemCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fbItemPrc != null" >
+        FB_ITEM_PRC = #{record.fbItemPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fbComment != null" >
+        FB_COMMENT = #{record.fbComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbItemPic != null" >
+        FB_ITEM_PIC = #{record.fbItemPic,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update FB_ORDER_ITEM
+    set FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      FB_ITEM_CNT = #{record.fbItemCnt,jdbcType=NUMERIC},
+      FB_ITEM_PRC = #{record.fbItemPrc,jdbcType=NUMERIC},
+      FB_COMMENT = #{record.fbComment,jdbcType=VARCHAR},
+      FB_ITEM_PIC = #{record.fbItemPic,jdbcType=BLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update FB_ORDER_ITEM
+    set FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      FB_ITEM_CNT = #{record.fbItemCnt,jdbcType=NUMERIC},
+      FB_ITEM_PRC = #{record.fbItemPrc,jdbcType=NUMERIC},
+      FB_COMMENT = #{record.fbComment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.FbOrderItem" >
+    update FB_ORDER_ITEM
+    <set >
+      <if test="fbItemCnt != null" >
+        FB_ITEM_CNT = #{fbItemCnt,jdbcType=NUMERIC},
+      </if>
+      <if test="fbItemPrc != null" >
+        FB_ITEM_PRC = #{fbItemPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="fbComment != null" >
+        FB_COMMENT = #{fbComment,jdbcType=VARCHAR},
+      </if>
+      <if test="fbItemPic != null" >
+        FB_ITEM_PIC = #{fbItemPic,jdbcType=BLOB},
+      </if>
+    </set>
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+      and ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.FbOrderItem" >
+    update FB_ORDER_ITEM
+    set FB_ITEM_CNT = #{fbItemCnt,jdbcType=NUMERIC},
+      FB_ITEM_PRC = #{fbItemPrc,jdbcType=NUMERIC},
+      FB_COMMENT = #{fbComment,jdbcType=VARCHAR},
+      FB_ITEM_PIC = #{fbItemPic,jdbcType=BLOB}
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+      and ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.FbOrderItem" >
+    update FB_ORDER_ITEM
+    set FB_ITEM_CNT = #{fbItemCnt,jdbcType=NUMERIC},
+      FB_ITEM_PRC = #{fbItemPrc,jdbcType=NUMERIC},
+      FB_COMMENT = #{fbComment,jdbcType=VARCHAR}
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+      and ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

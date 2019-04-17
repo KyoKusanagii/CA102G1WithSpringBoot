@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.ChatMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Chat" >
+    <result column="CHAT_MASTER_NO" property="chatMasterNo" jdbcType="VARCHAR" />
+    <result column="CHAT_FRIENDS" property="chatFriends" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CHAT_MASTER_NO, CHAT_FRIENDS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ChatExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CHAT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ChatExample" >
+    delete from CHAT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Chat" >
+    insert into CHAT (CHAT_MASTER_NO, CHAT_FRIENDS)
+    values (#{chatMasterNo,jdbcType=VARCHAR}, #{chatFriends,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Chat" >
+    insert into CHAT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chatMasterNo != null" >
+        CHAT_MASTER_NO,
+      </if>
+      <if test="chatFriends != null" >
+        CHAT_FRIENDS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chatMasterNo != null" >
+        #{chatMasterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chatFriends != null" >
+        #{chatFriends,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ChatExample" resultType="java.lang.Integer" >
+    select count(*) from CHAT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CHAT
+    <set >
+      <if test="record.chatMasterNo != null" >
+        CHAT_MASTER_NO = #{record.chatMasterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chatFriends != null" >
+        CHAT_FRIENDS = #{record.chatFriends,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CHAT
+    set CHAT_MASTER_NO = #{record.chatMasterNo,jdbcType=VARCHAR},
+      CHAT_FRIENDS = #{record.chatFriends,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

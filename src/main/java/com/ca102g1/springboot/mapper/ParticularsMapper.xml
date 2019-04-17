@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.ParticularsMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Particulars" >
+    <id column="PART_NO" property="partNo" jdbcType="NUMERIC" />
+    <result column="CAT_NO" property="catNo" jdbcType="NUMERIC" />
+    <result column="PART_NAME" property="partName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PART_NO, CAT_NO, PART_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ParticularsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PARTICULARS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PARTICULARS
+    where PART_NO = #{partNo,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PARTICULARS
+    where PART_NO = #{partNo,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ParticularsExample" >
+    delete from PARTICULARS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Particulars" >
+    insert into PARTICULARS (PART_NO, CAT_NO, PART_NAME
+      )
+    values (#{partNo,jdbcType=NUMERIC}, #{catNo,jdbcType=NUMERIC}, #{partName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Particulars" >
+    insert into PARTICULARS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="partNo != null" >
+        PART_NO,
+      </if>
+      <if test="catNo != null" >
+        CAT_NO,
+      </if>
+      <if test="partName != null" >
+        PART_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="partNo != null" >
+        #{partNo,jdbcType=NUMERIC},
+      </if>
+      <if test="catNo != null" >
+        #{catNo,jdbcType=NUMERIC},
+      </if>
+      <if test="partName != null" >
+        #{partName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ParticularsExample" resultType="java.lang.Integer" >
+    select count(*) from PARTICULARS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PARTICULARS
+    <set >
+      <if test="record.partNo != null" >
+        PART_NO = #{record.partNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.catNo != null" >
+        CAT_NO = #{record.catNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.partName != null" >
+        PART_NAME = #{record.partName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PARTICULARS
+    set PART_NO = #{record.partNo,jdbcType=NUMERIC},
+      CAT_NO = #{record.catNo,jdbcType=NUMERIC},
+      PART_NAME = #{record.partName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Particulars" >
+    update PARTICULARS
+    <set >
+      <if test="catNo != null" >
+        CAT_NO = #{catNo,jdbcType=NUMERIC},
+      </if>
+      <if test="partName != null" >
+        PART_NAME = #{partName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PART_NO = #{partNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Particulars" >
+    update PARTICULARS
+    set CAT_NO = #{catNo,jdbcType=NUMERIC},
+      PART_NAME = #{partName,jdbcType=VARCHAR}
+    where PART_NO = #{partNo,jdbcType=NUMERIC}
+  </update>
+</mapper>

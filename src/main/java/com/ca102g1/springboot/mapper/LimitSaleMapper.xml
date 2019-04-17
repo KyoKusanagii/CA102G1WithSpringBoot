@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.LimitSaleMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.LimitSale" >
+    <id column="SALE_NO" property="saleNo" jdbcType="NUMERIC" />
+    <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+    <result column="SALE_START" property="saleStart" jdbcType="TIMESTAMP" />
+    <result column="SALE_END" property="saleEnd" jdbcType="TIMESTAMP" />
+    <result column="SALE_PRICE" property="salePrice" jdbcType="NUMERIC" />
+    <result column="SALE_STATUS" property="saleStatus" jdbcType="NUMERIC" />
+    <result column="SALE_REMARK" property="saleRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SALE_NO, ITEM_NO, SALE_START, SALE_END, SALE_PRICE, SALE_STATUS, SALE_REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.LimitSaleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LIMIT_SALE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from LIMIT_SALE
+    where SALE_NO = #{saleNo,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from LIMIT_SALE
+    where SALE_NO = #{saleNo,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.LimitSaleExample" >
+    delete from LIMIT_SALE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.LimitSale" >
+    insert into LIMIT_SALE (SALE_NO, ITEM_NO, SALE_START, 
+      SALE_END, SALE_PRICE, SALE_STATUS, 
+      SALE_REMARK)
+    values (#{saleNo,jdbcType=NUMERIC}, #{itemNo,jdbcType=VARCHAR}, #{saleStart,jdbcType=TIMESTAMP}, 
+      #{saleEnd,jdbcType=TIMESTAMP}, #{salePrice,jdbcType=NUMERIC}, #{saleStatus,jdbcType=NUMERIC}, 
+      #{saleRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.LimitSale" >
+    insert into LIMIT_SALE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="saleNo != null" >
+        SALE_NO,
+      </if>
+      <if test="itemNo != null" >
+        ITEM_NO,
+      </if>
+      <if test="saleStart != null" >
+        SALE_START,
+      </if>
+      <if test="saleEnd != null" >
+        SALE_END,
+      </if>
+      <if test="salePrice != null" >
+        SALE_PRICE,
+      </if>
+      <if test="saleStatus != null" >
+        SALE_STATUS,
+      </if>
+      <if test="saleRemark != null" >
+        SALE_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="saleNo != null" >
+        #{saleNo,jdbcType=NUMERIC},
+      </if>
+      <if test="itemNo != null" >
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleStart != null" >
+        #{saleStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleEnd != null" >
+        #{saleEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salePrice != null" >
+        #{salePrice,jdbcType=NUMERIC},
+      </if>
+      <if test="saleStatus != null" >
+        #{saleStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="saleRemark != null" >
+        #{saleRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.LimitSaleExample" resultType="java.lang.Integer" >
+    select count(*) from LIMIT_SALE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LIMIT_SALE
+    <set >
+      <if test="record.saleNo != null" >
+        SALE_NO = #{record.saleNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemNo != null" >
+        ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleStart != null" >
+        SALE_START = #{record.saleStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.saleEnd != null" >
+        SALE_END = #{record.saleEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salePrice != null" >
+        SALE_PRICE = #{record.salePrice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.saleStatus != null" >
+        SALE_STATUS = #{record.saleStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="record.saleRemark != null" >
+        SALE_REMARK = #{record.saleRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LIMIT_SALE
+    set SALE_NO = #{record.saleNo,jdbcType=NUMERIC},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      SALE_START = #{record.saleStart,jdbcType=TIMESTAMP},
+      SALE_END = #{record.saleEnd,jdbcType=TIMESTAMP},
+      SALE_PRICE = #{record.salePrice,jdbcType=NUMERIC},
+      SALE_STATUS = #{record.saleStatus,jdbcType=NUMERIC},
+      SALE_REMARK = #{record.saleRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.LimitSale" >
+    update LIMIT_SALE
+    <set >
+      <if test="itemNo != null" >
+        ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleStart != null" >
+        SALE_START = #{saleStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleEnd != null" >
+        SALE_END = #{saleEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salePrice != null" >
+        SALE_PRICE = #{salePrice,jdbcType=NUMERIC},
+      </if>
+      <if test="saleStatus != null" >
+        SALE_STATUS = #{saleStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="saleRemark != null" >
+        SALE_REMARK = #{saleRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SALE_NO = #{saleNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.LimitSale" >
+    update LIMIT_SALE
+    set ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      SALE_START = #{saleStart,jdbcType=TIMESTAMP},
+      SALE_END = #{saleEnd,jdbcType=TIMESTAMP},
+      SALE_PRICE = #{salePrice,jdbcType=NUMERIC},
+      SALE_STATUS = #{saleStatus,jdbcType=NUMERIC},
+      SALE_REMARK = #{saleRemark,jdbcType=VARCHAR}
+    where SALE_NO = #{saleNo,jdbcType=NUMERIC}
+  </update>
+</mapper>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.ArticleReportMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ArticleReport" >
+    <id column="ARTICLE_REPORT_NO" property="articleReportNo" jdbcType="VARCHAR" />
+    <result column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
+    <result column="EMP_NO" property="empNo" jdbcType="VARCHAR" />
+    <result column="ARTI_NO" property="artiNo" jdbcType="VARCHAR" />
+    <result column="REPORT_STATUS" property="reportStatus" jdbcType="NUMERIC" />
+    <result column="REPORT_REASONS" property="reportReasons" jdbcType="VARCHAR" />
+    <result column="REPORT_DESCRIPTION" property="reportDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ARTICLE_REPORT_NO, MEM_NO, EMP_NO, ARTI_NO, REPORT_STATUS, REPORT_REASONS, REPORT_DESCRIPTION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ArticleReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ARTICLE_REPORT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ARTICLE_REPORT
+    where ARTICLE_REPORT_NO = #{articleReportNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ARTICLE_REPORT
+    where ARTICLE_REPORT_NO = #{articleReportNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ArticleReportExample" >
+    delete from ARTICLE_REPORT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.ArticleReport" >
+    insert into ARTICLE_REPORT (ARTICLE_REPORT_NO, MEM_NO, EMP_NO, 
+      ARTI_NO, REPORT_STATUS, REPORT_REASONS, 
+      REPORT_DESCRIPTION)
+    values (#{articleReportNo,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR}, #{empNo,jdbcType=VARCHAR}, 
+      #{artiNo,jdbcType=VARCHAR}, #{reportStatus,jdbcType=NUMERIC}, #{reportReasons,jdbcType=VARCHAR}, 
+      #{reportDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ArticleReport" >
+    insert into ARTICLE_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleReportNo != null" >
+        ARTICLE_REPORT_NO,
+      </if>
+      <if test="memNo != null" >
+        MEM_NO,
+      </if>
+      <if test="empNo != null" >
+        EMP_NO,
+      </if>
+      <if test="artiNo != null" >
+        ARTI_NO,
+      </if>
+      <if test="reportStatus != null" >
+        REPORT_STATUS,
+      </if>
+      <if test="reportReasons != null" >
+        REPORT_REASONS,
+      </if>
+      <if test="reportDescription != null" >
+        REPORT_DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleReportNo != null" >
+        #{articleReportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null" >
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null" >
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="artiNo != null" >
+        #{artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportStatus != null" >
+        #{reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="reportReasons != null" >
+        #{reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDescription != null" >
+        #{reportDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ArticleReportExample" resultType="java.lang.Integer" >
+    select count(*) from ARTICLE_REPORT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ARTICLE_REPORT
+    <set >
+      <if test="record.articleReportNo != null" >
+        ARTICLE_REPORT_NO = #{record.articleReportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null" >
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empNo != null" >
+        EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artiNo != null" >
+        ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportStatus != null" >
+        REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="record.reportReasons != null" >
+        REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportDescription != null" >
+        REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ARTICLE_REPORT
+    set ARTICLE_REPORT_NO = #{record.articleReportNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
+      REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ArticleReport" >
+    update ARTICLE_REPORT
+    <set >
+      <if test="memNo != null" >
+        MEM_NO = #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null" >
+        EMP_NO = #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="artiNo != null" >
+        ARTI_NO = #{artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportStatus != null" >
+        REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="reportReasons != null" >
+        REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDescription != null" >
+        REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ARTICLE_REPORT_NO = #{articleReportNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArticleReport" >
+    update ARTICLE_REPORT
+    set MEM_NO = #{memNo,jdbcType=VARCHAR},
+      EMP_NO = #{empNo,jdbcType=VARCHAR},
+      ARTI_NO = #{artiNo,jdbcType=VARCHAR},
+      REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC},
+      REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR}
+    where ARTICLE_REPORT_NO = #{articleReportNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

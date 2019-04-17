@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Category" >
+    <id column="CAT_NO" property="catNo" jdbcType="NUMERIC" />
+    <result column="CAT_NAME" property="catName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CAT_NO, CAT_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.CategoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from CATEGORY
+    where CAT_NO = #{catNo,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from CATEGORY
+    where CAT_NO = #{catNo,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.CategoryExample" >
+    delete from CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Category" >
+    insert into CATEGORY (CAT_NO, CAT_NAME)
+    values (#{catNo,jdbcType=NUMERIC}, #{catName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Category" >
+    insert into CATEGORY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="catNo != null" >
+        CAT_NO,
+      </if>
+      <if test="catName != null" >
+        CAT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="catNo != null" >
+        #{catNo,jdbcType=NUMERIC},
+      </if>
+      <if test="catName != null" >
+        #{catName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.CategoryExample" resultType="java.lang.Integer" >
+    select count(*) from CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CATEGORY
+    <set >
+      <if test="record.catNo != null" >
+        CAT_NO = #{record.catNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.catName != null" >
+        CAT_NAME = #{record.catName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CATEGORY
+    set CAT_NO = #{record.catNo,jdbcType=NUMERIC},
+      CAT_NAME = #{record.catName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Category" >
+    update CATEGORY
+    <set >
+      <if test="catName != null" >
+        CAT_NAME = #{catName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CAT_NO = #{catNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Category" >
+    update CATEGORY
+    set CAT_NAME = #{catName,jdbcType=VARCHAR}
+    where CAT_NO = #{catNo,jdbcType=NUMERIC}
+  </update>
+</mapper>

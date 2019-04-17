@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ca102g1.springboot.mapper.LiveNotifyMapper" >
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.LiveNotifyKey" >
+    <id column="LIVE_NO" property="liveNo" jdbcType="VARCHAR" />
+    <id column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LIVE_NO, MEM_NO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.LiveNotifyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LIVE_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.LiveNotifyKey" >
+    delete from LIVE_NOTIFY
+    where LIVE_NO = #{liveNo,jdbcType=VARCHAR}
+      and MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.LiveNotifyExample" >
+    delete from LIVE_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.LiveNotifyKey" >
+    insert into LIVE_NOTIFY (LIVE_NO, MEM_NO)
+    values (#{liveNo,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.LiveNotifyKey" >
+    insert into LIVE_NOTIFY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="liveNo != null" >
+        LIVE_NO,
+      </if>
+      <if test="memNo != null" >
+        MEM_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="liveNo != null" >
+        #{liveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null" >
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.LiveNotifyExample" resultType="java.lang.Integer" >
+    select count(*) from LIVE_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LIVE_NOTIFY
+    <set >
+      <if test="record.liveNo != null" >
+        LIVE_NO = #{record.liveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null" >
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LIVE_NOTIFY
+    set LIVE_NO = #{record.liveNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
