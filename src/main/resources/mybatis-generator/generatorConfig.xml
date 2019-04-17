@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+     PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+     "http://mybatis .org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--指定jar驅動檔位置-->
+    <classPathEntry location="ojdbc8.jar"/>
+    <context id ="CA102G1" targetRuntime ="MyBatis3" >
+        <commentGenerator>
+            <property name ="suppressDate" value ="false" />
+            <property name ="suppressAllComments" value ="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@localhost:1521:xe" userId ="Instabuy"
+                        password="oracle">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage ="com.ca102g1.springboot.model"
+                            targetProject ="src/main/java" >
+            <property name ="enableSubPackages" value ="true" />
+            <property name ="trimStrings" value ="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage ="com.ca102g1.springboot.mapper"
+                       targetProject="src/main/resources/mybatis-generator" >
+          <property name ="enableSubPackages" value ="true" />
+        </sqlMapGenerator >
+
+        <javaClientGenerator targetPackage ="com.ca102g1.springboot.mapper"
+         targetProject ="src/main/java" type ="XMLMAPPER" >
+        </javaClientGenerator>
+
+        <table tableName="ARTI_REPLY">
+        </table>
+        <table tableName="ARTICLE">
+        </table>
+        <table tableName="ARTICLE_REPORT">
+        </table>
+        <table tableName="ARTIREPLY_REPORT">
+        </table>
+        <table tableName="CAROUSEL">
+        </table>
+        <table tableName="CATEGORY">
+        </table>
+        <table tableName="CHAT">
+        </table>
+        <table tableName="CONSULTER">
+        </table>
+        <table tableName="EMPLOYEE">
+        </table>
+        <table tableName="FB_ORDER_ITEM">
+        </table>
+        <table tableName="FB_ORDER">
+        </table>
+        <table tableName="FOLLOW_ITEM">
+        </table>
+        <table tableName="FOLLOW_MEM">
+        </table>
+        <table tableName="ITEM">
+        </table>
+        <table tableName="ITEM_REPORT">
+        </table>
+        <table tableName="ITEMPIC">
+        </table>
+        <table tableName="LIMIT_SALE">
+        </table>
+        <table tableName="LIVE">
+        </table>
+        <table tableName="LIVE_NOTIFY">
+        </table>
+        <table tableName="MALL_ORDER_ITEM">
+        </table>
+        <table tableName="MALL_ORDER">
+        </table>
+        <table tableName="MEMBER">
+        </table>
+        <table tableName="NEWS">
+        </table>
+        <table tableName="PARTICULARS">
+        </table>
+        <table tableName="SPECIAL_FORU">
+        </table>
+        <table tableName="TRAILER">
+        </table>
+        <table tableName="TRAILER_NOTIFY">
+        </table>
+        <table tableName="TRAILER_NOTIFY">
+        </table>
+    </context>
+ </generatorConfiguration>
