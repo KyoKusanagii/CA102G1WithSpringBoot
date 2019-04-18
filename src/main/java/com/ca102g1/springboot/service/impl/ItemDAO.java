@@ -1,5 +1,10 @@
 package com.ca102g1.springboot.service.impl;
 
+import com.ca102g1.springboot.mapper.ItemMapper;
+import com.ca102g1.springboot.model.Item;
+import com.ca102g1.springboot.service.ItemDAO_interface;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,113 +18,45 @@ import java.util.Base64;
 import java.util.List;
 
 public class ItemDAO implements ItemDAO_interface {
-	
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
 
-	private static final String INSERT_STMT = "INSERT INTO ITEM(ITEM_NO,ITEM_NAME,ITEM_PRICE,ITEM_PRIMARY_CLASS,ITEM_SECONDARY_CLASS,ITEM_OWNER,"
-			+ "IS_FB_LAUNCH,IS_MALL_LAUNCH,ITEM_INVENTORY,ITEM_DESCRIPTION)"
-			+ "VALUES(('I'||LPAD(to_char(itemno_SEQ.nextval),5,'0')), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	@Autowired
+	ItemMapper itemMapper;
 
-	private static final String UPDATE_STMT = "UPDATE ITEM SET ITEM_NAME = ?,ITEM_PRICE = ?,ITEM_PRIMARY_CLASS = ?,ITEM_SECONDARY_CLASS = ?,ITEM_OWNER = ?,IS_FB_LAUNCH = ?,"
-			+ "IS_MALL_LAUNCH = ?,ITEM_INVENTORY = ?,ITEM_DESCRIPTION = ? WHERE ITEM_NO = ?";
-	
-	private static final String FIND_BY_PK_PICS = "SELECT * FROM ITEM JOIN ITEMPIC ON ITEM.ITEM_NO = ITEMPIC.ITEM_NO WHERE ITEM.ITEM_NO = ?";
-
-	private static final String DELETE_STMT = "DELETE FROM ITEM WHERE ITEM_NO = ?"; // 商品不能被刪除
-
-	//private static final String FIND_BY_PK = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_NO =?";
-
-	private static final String FIND_BY_PK = "SELECT * FROM ITEM WHERE ITEM_NO = ?";
-	
-	// 20180724新增會員只看到自己商品
-	private static final String GET_ALL = "SELECT * FROM ITEM  WHERE ITEM_OWNER = ? ORDER BY ITEM_NO";
-
-	// 20180723新增上下架設定
-	private static final String UPDATE_LAUNCH = "UPDATE ITEM SET IS_FB_LAUNCH = ?, IS_MALL_LAUNCH = ? WHERE ITEM_NO=?";
-
-	// 20180724 Hugh搜尋欄
-	private static final String FIND_BY_CAT = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_PRIMARY_CLASS = ?";
-
-	private static final String FIND_BY_PART = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_SECONDARY_CLASS = ?";
-
-	private static final String FIND_BY_KEYWORD = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND UPPER(ITEM_NAME) LIKE UPPER(?)";
-	
-	private static final String LARRY_GET_ALL = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_OWNER =?";
-	
-	private static final String LARRY_GET_ONE = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_NO =?";
+//	private static final String INSERT_STMT = "INSERT INTO ITEM(ITEM_NO,ITEM_NAME,ITEM_PRICE,ITEM_PRIMARY_CLASS,ITEM_SECONDARY_CLASS,ITEM_OWNER,"
+//			+ "IS_FB_LAUNCH,IS_MALL_LAUNCH,ITEM_INVENTORY,ITEM_DESCRIPTION)"
+//			+ "VALUES(('I'||LPAD(to_char(itemno_SEQ.nextval),5,'0')), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//	private static final String UPDATE_STMT = "UPDATE ITEM SET ITEM_NAME = ?,ITEM_PRICE = ?,ITEM_PRIMARY_CLASS = ?,ITEM_SECONDARY_CLASS = ?,ITEM_OWNER = ?,IS_FB_LAUNCH = ?,"
+//			+ "IS_MALL_LAUNCH = ?,ITEM_INVENTORY = ?,ITEM_DESCRIPTION = ? WHERE ITEM_NO = ?";
+//
+//	private static final String FIND_BY_PK_PICS = "SELECT * FROM ITEM JOIN ITEMPIC ON ITEM.ITEM_NO = ITEMPIC.ITEM_NO WHERE ITEM.ITEM_NO = ?";
+//
+//	private static final String DELETE_STMT = "DELETE FROM ITEM WHERE ITEM_NO = ?"; // 商品不能被刪除
+//
+//	//private static final String FIND_BY_PK = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_NO =?";
+//
+//	private static final String FIND_BY_PK = "SELECT * FROM ITEM WHERE ITEM_NO = ?";
+//
+//	// 20180724新增會員只看到自己商品
+//	private static final String GET_ALL = "SELECT * FROM ITEM  WHERE ITEM_OWNER = ? ORDER BY ITEM_NO";
+//
+//	// 20180723新增上下架設定
+//	private static final String UPDATE_LAUNCH = "UPDATE ITEM SET IS_FB_LAUNCH = ?, IS_MALL_LAUNCH = ? WHERE ITEM_NO=?";
+//
+//	// 20180724 Hugh搜尋欄
+//	private static final String FIND_BY_CAT = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_PRIMARY_CLASS = ?";
+//
+//	private static final String FIND_BY_PART = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_SECONDARY_CLASS = ?";
+//
+//	private static final String FIND_BY_KEYWORD = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND UPPER(ITEM_NAME) LIKE UPPER(?)";
+//
+//	private static final String LARRY_GET_ALL = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_OWNER =?";
+//
+//	private static final String LARRY_GET_ONE = "SELECT * FROM ITEM NATURAL JOIN (SELECT A.*, B.ITEM_PIC FROM ( SELECT  MIN(ITEM_PIC_NO) ITEM_PIC_NO, ITEM_NO FROM ITEMPIC GROUP BY ITEM_NO)A, ITEMPIC B WHERE A.ITEM_PIC_NO = B.ITEM_PIC_NO) WHERE IS_MALL_LAUNCH = '1' AND ITEM_NO =?";
 
 	@Override
-	public String insert(ItemVO item) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String next_itemno = null;
-		ResultSet rs = null;
-		try {
-
-			con = ds.getConnection();
-			
-//			con.setAutoCommit(false);
-			
-			String cols[] = {"ITEM_NO"};
-			pstmt = con.prepareStatement(INSERT_STMT,cols);
-
-			// pstmt.setString(1, item.getItem_no()); 這裡會自增主鍵，不用設定
-			pstmt.setString(1, item.getItem_name());
-			pstmt.setInt(2, item.getItem_price());
-			pstmt.setInt(3, item.getItem_primary_class());
-			pstmt.setInt(4, item.getItem_secondary_class());
-			pstmt.setString(5, item.getItem_owner());
-			pstmt.setInt(6, item.getIs_fb_launch());
-			pstmt.setInt(7, item.getIs_mall_launch());
-			pstmt.setInt(8, item.getItem_inventory());
-			pstmt.setString(9, item.getItem_description());
-			pstmt.executeUpdate();
-			
-			// 取得對應的自增主鍵值
-			rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
-				next_itemno = rs.getString(1);
-				System.out.println("自增主鍵值 = " + next_itemno + "(剛新增成功的訂單編號)");
-			} else {
-				System.out.println("未取得自增主鍵值");
-			}
-
-			// Handle any driver errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return next_itemno;
+	public String insert(Item item) {
+		itemMapper.insert(item);
 	}
 
 

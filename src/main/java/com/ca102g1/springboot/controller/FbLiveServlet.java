@@ -22,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.ca102g1.springboot.model.FbShoppingCart;
+import com.ca102g1.springboot.model.Item;
+import com.ca102g1.springboot.model.Member;
+import com.ca102g1.springboot.service.ItemDAO_interface;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import com.item.model.ItemService;
@@ -35,18 +39,67 @@ import com.member.model.MemService;
 import com.member.model.MemVO;
 import com.shoppingCart.model.FbShoppingCartVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import sun.misc.BASE64Decoder;
 
 /**
  * Servlet implementation class FbLiveServlet
  */
-@WebServlet("/FrontEnd/FbLive.do")
-public class FbLiveServlet extends HttpServlet {
+//@WebServlet("/FrontEnd/FbLive.do")
+@Controller
+@RequestMapping("/fbLive")
+public class FbLiveServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	@Autowired
+	ItemDAO_interface itemDAO_interface;
 
-		doPost(req, res);
+	@RequestMapping(value = "insert_item",method = RequestMethod.POST)
+	public String intertItem(@RequestParam("item_name") String item_name,
+	 @RequestParam("item_price") String item_price, @RequestParam("item_owner") String item_owner){
+		PrintWriter out = res.getWriter();
+		Integer item_primary_class = 1;
+		Integer item_secondary_class = 1;
+		Integer is_fb_launch = 1; // 預設新增就上架
+		Integer is_mall_launch = 0;
+		Integer item_inventory = 1;
+		String item_description = "暫無商品描述";
+		Item item = new Item();
+		item.setIsFbLaunch(is_fb_launch);
+		item.setIsMallLaunch(is_mall_launch);
+		item.setItemDescription(item_description);
+		item.setItemInventory(item_inventory);
+		item.setItemName(item_name);
+		item.setItemPrice(item_price);
+		item.setItemOwner(item_owner);
+		item.setItemPrimaryClass(item_primary_class);
+		item.setItemSecondaryClass(item_secondary_class);
+		String next_itemno = itemDAO_interface.insert(item);
+		out.println(next_itemno);
+	}
+
+	@RequestMapping(value = "/insertOrder",method = RequestMethod.POST)
+	public String insertOrder(){
+		HttpSession session = req.getSession();
+		List<FbShoppingCart> fb_buylist = (Vector<FbShoppingCart>) session.getAttribute("fb_shoppingCart");
+		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		Member member = new Member();
+		Timestamp fb_order_time = new Timestamp(System.currentTimeMillis());
+		String fb_order_trans = "未選擇";
+		String fb_order_status = "進行中";
+		String fb_pay_status = "未付款";
+		String fb_transport = "未選擇";
+		String fb_order_remark = "無";
+		Set<String> buyer_no_set = new HashSet<String>();
+		for (int i = 0; i < fb_buylist.size(); i++) {
+			FbShoppingCart order = fb_buylist.get(i);
+			buyer_no_set.add(order.getFb_buyer_no());
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -66,70 +119,17 @@ public class FbLiveServlet extends HttpServlet {
 
 		}
 		
-		
-		
-		if ("insert_item".equals(action)) {
-			
-			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			String item_name = req.getParameter("item_name");
-			Integer item_price = new Integer(req.getParameter("item_price").trim());
-			Integer item_primary_class = 1;
-			Integer item_secondary_class = 1;
-			String item_owner = req.getParameter("item_owner");
-			Integer is_fb_launch = 1; // 預設新增就上架
-			Integer is_mall_launch = 0;
-			Integer item_inventory = 1;
-			String item_description = "暫無商品描述";
 
-			ItemVO itemVO = new ItemVO();
-
-			itemVO.setItem_name(item_name);
-			itemVO.setItem_price(item_price);
-			itemVO.setItem_primary_class(item_primary_class);
-			itemVO.setItem_secondary_class(item_secondary_class);
-			itemVO.setItem_owner(item_owner);
-			itemVO.setIs_fb_launch(is_fb_launch);
-			itemVO.setIs_mall_launch(is_mall_launch);
-			itemVO.setItem_inventory(item_inventory);
-			itemVO.setItem_description(item_description);
-
-			/*************************** 2.開始新增資料 ***************************************/
-			// 新增商品文字資料
-			ItemService itemService = new ItemService();
-			String next_itemno = itemService.addItem(item_name, item_price, item_primary_class, item_secondary_class,
-					item_owner, is_fb_launch, is_mall_launch, item_inventory, item_description);
-
-			// 回傳新增主鍵
-			out.println(next_itemno);
-
-		}
-
-		// 新增訂單
-		if ("insertOrder".equals(action)) {
-
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				MemVO memVO = (MemVO) session.getAttribute("memVO");
-				// String fb_buyer_no = memVO.getMem_no();
-				Timestamp fb_order_time = new Timestamp(System.currentTimeMillis());
-				String fb_order_trans = "未選擇";
-				String fb_order_status = "進行中";
-				String fb_pay_status = "未付款";
-				String fb_transport = "未選擇";
-				String fb_order_remark = "無";
+
 				// ItemService itemSvc = new ItemService();
 				Set<String> buyer_no_set = new HashSet<String>();
 				// 將購物車中商品取出,並寫入FbShoppingCartVO
 				// List<FbShoppingCartVO> orderList = new ArrayList<FbShoppingCartVO>();
 
 				// 抓出所有的買家set
-				for (int i = 0; i < fb_buylist.size(); i++) {
-					FbShoppingCartVO order = fb_buylist.get(i);
-					buyer_no_set.add(order.getFb_buyer_no());
 
-				}
 				System.out.println("buyer_no=" + buyer_no_set.size());
 
 				// 開始新增訂單交易

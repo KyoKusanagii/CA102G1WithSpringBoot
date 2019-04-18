@@ -12,7 +12,7 @@ public interface ItemMapper {
 
     int deleteByPrimaryKey(String itemNo);
 
-    int insert(Item record);
+    String insert(Item record);
 
     int insertSelective(Item record);
 

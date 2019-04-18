@@ -106,6 +106,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ca102g1.springboot.model.Item">
+    <selectKey keyProperty="item_no" resultType="String" order="BEFORE">
+      select nvl(max(id),0)+1 from ITEM
+    </selectKey>
     insert into ITEM (ITEM_NO, ITEM_NAME, ITEM_PRICE, 
       ITEM_PRIMARY_CLASS, ITEM_SECONDARY_CLASS, ITEM_OWNER, 
       IS_FB_LAUNCH, IS_MALL_LAUNCH, ITEM_INVENTORY, 
