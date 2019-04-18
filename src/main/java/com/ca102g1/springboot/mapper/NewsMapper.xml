@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.NewsMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.News" >
-    <id column="NEWS_NO" property="newsNo" jdbcType="NUMERIC" />
-    <result column="NEWS_DATE" property="newsDate" jdbcType="TIMESTAMP" />
-    <result column="NEWS_TITLE" property="newsTitle" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.News">
+    <id column="NEWS_NO" jdbcType="NUMERIC" property="newsNo" />
+    <result column="NEWS_DATE" jdbcType="TIMESTAMP" property="newsDate" />
+    <result column="NEWS_TITLE" jdbcType="VARCHAR" property="newsTitle" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.News" extends="BaseResultMap" >
-    <result column="NEWS_CONTENT" property="newsContent" jdbcType="CLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.News">
+    <result column="NEWS_CONTENT" jdbcType="CLOB" property="newsContent" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -38,25 +38,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -67,43 +67,43 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     NEWS_NO, NEWS_DATE, NEWS_TITLE
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     NEWS_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.NewsExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.NewsExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from NEWS
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.NewsExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.NewsExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from NEWS
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -111,121 +111,351 @@
     from NEWS
     where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from NEWS
     where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.NewsExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.NewsExample">
     delete from NEWS
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.News" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.News">
     insert into NEWS (NEWS_NO, NEWS_DATE, NEWS_TITLE, 
       NEWS_CONTENT)
     values (#{newsNo,jdbcType=NUMERIC}, #{newsDate,jdbcType=TIMESTAMP}, #{newsTitle,jdbcType=VARCHAR}, 
       #{newsContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.News" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.News">
     insert into NEWS
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="newsNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsNo != null">
         NEWS_NO,
       </if>
-      <if test="newsDate != null" >
+      <if test="newsDate != null">
         NEWS_DATE,
       </if>
-      <if test="newsTitle != null" >
+      <if test="newsTitle != null">
         NEWS_TITLE,
       </if>
-      <if test="newsContent != null" >
+      <if test="newsContent != null">
         NEWS_CONTENT,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="newsNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsNo != null">
         #{newsNo,jdbcType=NUMERIC},
       </if>
-      <if test="newsDate != null" >
+      <if test="newsDate != null">
         #{newsDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="newsTitle != null" >
+      <if test="newsTitle != null">
         #{newsTitle,jdbcType=VARCHAR},
       </if>
-      <if test="newsContent != null" >
+      <if test="newsContent != null">
         #{newsContent,jdbcType=CLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.NewsExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.NewsExample" resultType="java.lang.Integer">
     select count(*) from NEWS
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update NEWS
-    <set >
-      <if test="record.newsNo != null" >
+    <set>
+      <if test="record.newsNo != null">
         NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
       </if>
-      <if test="record.newsDate != null" >
+      <if test="record.newsDate != null">
         NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.newsTitle != null" >
+      <if test="record.newsTitle != null">
         NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR},
       </if>
-      <if test="record.newsContent != null" >
+      <if test="record.newsContent != null">
         NEWS_CONTENT = #{record.newsContent,jdbcType=CLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update NEWS
     set NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
       NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
       NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR},
       NEWS_CONTENT = #{record.newsContent,jdbcType=CLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update NEWS
     set NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
       NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
       NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.News" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.News">
     update NEWS
-    <set >
-      <if test="newsDate != null" >
+    <set>
+      <if test="newsDate != null">
         NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="newsTitle != null" >
+      <if test="newsTitle != null">
         NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
       </if>
-      <if test="newsContent != null" >
+      <if test="newsContent != null">
         NEWS_CONTENT = #{newsContent,jdbcType=CLOB},
       </if>
     </set>
     where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.News" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.News">
     update NEWS
     set NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
       NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
       NEWS_CONTENT = #{newsContent,jdbcType=CLOB}
     where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.News" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.News">
+    update NEWS
+    set NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
+      NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR}
+    where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.News">
+    <id column="NEWS_NO" jdbcType="NUMERIC" property="newsNo" />
+    <result column="NEWS_DATE" jdbcType="TIMESTAMP" property="newsDate" />
+    <result column="NEWS_TITLE" jdbcType="VARCHAR" property="newsTitle" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.News">
+    <result column="NEWS_CONTENT" jdbcType="CLOB" property="newsContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    NEWS_NO, NEWS_DATE, NEWS_TITLE
+  </sql>
+  <sql id="Blob_Column_List">
+    NEWS_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.NewsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from NEWS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.NewsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from NEWS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from NEWS
+    where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from NEWS
+    where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.NewsExample">
+    delete from NEWS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.News">
+    insert into NEWS (NEWS_NO, NEWS_DATE, NEWS_TITLE, 
+      NEWS_CONTENT)
+    values (#{newsNo,jdbcType=NUMERIC}, #{newsDate,jdbcType=TIMESTAMP}, #{newsTitle,jdbcType=VARCHAR}, 
+      #{newsContent,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.News">
+    insert into NEWS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsNo != null">
+        NEWS_NO,
+      </if>
+      <if test="newsDate != null">
+        NEWS_DATE,
+      </if>
+      <if test="newsTitle != null">
+        NEWS_TITLE,
+      </if>
+      <if test="newsContent != null">
+        NEWS_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsNo != null">
+        #{newsNo,jdbcType=NUMERIC},
+      </if>
+      <if test="newsDate != null">
+        #{newsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsTitle != null">
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        #{newsContent,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.NewsExample" resultType="java.lang.Integer">
+    select count(*) from NEWS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update NEWS
+    <set>
+      <if test="record.newsNo != null">
+        NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.newsDate != null">
+        NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.newsTitle != null">
+        NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newsContent != null">
+        NEWS_CONTENT = #{record.newsContent,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update NEWS
+    set NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
+      NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
+      NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR},
+      NEWS_CONTENT = #{record.newsContent,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update NEWS
+    set NEWS_NO = #{record.newsNo,jdbcType=NUMERIC},
+      NEWS_DATE = #{record.newsDate,jdbcType=TIMESTAMP},
+      NEWS_TITLE = #{record.newsTitle,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.News">
+    update NEWS
+    <set>
+      <if test="newsDate != null">
+        NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsTitle != null">
+        NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        NEWS_CONTENT = #{newsContent,jdbcType=CLOB},
+      </if>
+    </set>
+    where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.News">
+    update NEWS
+    set NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
+      NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
+      NEWS_CONTENT = #{newsContent,jdbcType=CLOB}
+    where NEWS_NO = #{newsNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.News">
     update NEWS
     set NEWS_DATE = #{newsDate,jdbcType=TIMESTAMP},
       NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR}

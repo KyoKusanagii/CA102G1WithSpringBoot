@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.ItemReportMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ItemReport" >
-    <id column="ITEM_REPORT_NO" property="itemReportNo" jdbcType="VARCHAR" />
-    <result column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
-    <result column="EMP_NO" property="empNo" jdbcType="VARCHAR" />
-    <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
-    <result column="REPORT_REASONS" property="reportReasons" jdbcType="VARCHAR" />
-    <result column="REPORT_DESCRIPTION" property="reportDescription" jdbcType="VARCHAR" />
-    <result column="REPORT_STATUS" property="reportStatus" jdbcType="NUMERIC" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.ItemReportMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ItemReport">
+    <id column="ITEM_REPORT_NO" jdbcType="VARCHAR" property="itemReportNo" />
+    <result column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+    <result column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+    <result column="REPORT_REASONS" jdbcType="VARCHAR" property="reportReasons" />
+    <result column="REPORT_DESCRIPTION" jdbcType="VARCHAR" property="reportDescription" />
+    <result column="REPORT_STATUS" jdbcType="NUMERIC" property="reportStatus" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.ItemReport" extends="BaseResultMap" >
-    <result column="REPORT_PIC" property="reportPic" jdbcType="BLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.ItemReport">
+    <result column="REPORT_PIC" jdbcType="BLOB" property="reportPic" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -42,25 +42,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -71,43 +71,43 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     ITEM_REPORT_NO, MEM_NO, EMP_NO, ITEM_NO, REPORT_REASONS, REPORT_DESCRIPTION, REPORT_STATUS
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     REPORT_PIC
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReportExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from ITEM_REPORT
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ItemReportExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from ITEM_REPORT
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -115,17 +115,17 @@
     from ITEM_REPORT
     where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ITEM_REPORT
     where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample">
     delete from ITEM_REPORT
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.ItemReport" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.ItemReport">
     insert into ITEM_REPORT (ITEM_REPORT_NO, MEM_NO, EMP_NO, 
       ITEM_NO, REPORT_REASONS, REPORT_DESCRIPTION, 
       REPORT_STATUS, REPORT_PIC)
@@ -133,100 +133,100 @@
       #{itemNo,jdbcType=VARCHAR}, #{reportReasons,jdbcType=VARCHAR}, #{reportDescription,jdbcType=VARCHAR}, 
       #{reportStatus,jdbcType=NUMERIC}, #{reportPic,jdbcType=BLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ItemReport" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ItemReport">
     insert into ITEM_REPORT
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="itemReportNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemReportNo != null">
         ITEM_REPORT_NO,
       </if>
-      <if test="memNo != null" >
+      <if test="memNo != null">
         MEM_NO,
       </if>
-      <if test="empNo != null" >
+      <if test="empNo != null">
         EMP_NO,
       </if>
-      <if test="itemNo != null" >
+      <if test="itemNo != null">
         ITEM_NO,
       </if>
-      <if test="reportReasons != null" >
+      <if test="reportReasons != null">
         REPORT_REASONS,
       </if>
-      <if test="reportDescription != null" >
+      <if test="reportDescription != null">
         REPORT_DESCRIPTION,
       </if>
-      <if test="reportStatus != null" >
+      <if test="reportStatus != null">
         REPORT_STATUS,
       </if>
-      <if test="reportPic != null" >
+      <if test="reportPic != null">
         REPORT_PIC,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="itemReportNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemReportNo != null">
         #{itemReportNo,jdbcType=VARCHAR},
       </if>
-      <if test="memNo != null" >
+      <if test="memNo != null">
         #{memNo,jdbcType=VARCHAR},
       </if>
-      <if test="empNo != null" >
+      <if test="empNo != null">
         #{empNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemNo != null" >
+      <if test="itemNo != null">
         #{itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="reportReasons != null" >
+      <if test="reportReasons != null">
         #{reportReasons,jdbcType=VARCHAR},
       </if>
-      <if test="reportDescription != null" >
+      <if test="reportDescription != null">
         #{reportDescription,jdbcType=VARCHAR},
       </if>
-      <if test="reportStatus != null" >
+      <if test="reportStatus != null">
         #{reportStatus,jdbcType=NUMERIC},
       </if>
-      <if test="reportPic != null" >
+      <if test="reportPic != null">
         #{reportPic,jdbcType=BLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultType="java.lang.Integer">
     select count(*) from ITEM_REPORT
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update ITEM_REPORT
-    <set >
-      <if test="record.itemReportNo != null" >
+    <set>
+      <if test="record.itemReportNo != null">
         ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.memNo != null" >
+      <if test="record.memNo != null">
         MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.empNo != null" >
+      <if test="record.empNo != null">
         EMP_NO = #{record.empNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemNo != null" >
+      <if test="record.itemNo != null">
         ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.reportReasons != null" >
+      <if test="record.reportReasons != null">
         REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
       </if>
-      <if test="record.reportDescription != null" >
+      <if test="record.reportDescription != null">
         REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
       </if>
-      <if test="record.reportStatus != null" >
+      <if test="record.reportStatus != null">
         REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
       </if>
-      <if test="record.reportPic != null" >
+      <if test="record.reportPic != null">
         REPORT_PIC = #{record.reportPic,jdbcType=BLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update ITEM_REPORT
     set ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
       MEM_NO = #{record.memNo,jdbcType=VARCHAR},
@@ -236,11 +236,11 @@
       REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
       REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
       REPORT_PIC = #{record.reportPic,jdbcType=BLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update ITEM_REPORT
     set ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
       MEM_NO = #{record.memNo,jdbcType=VARCHAR},
@@ -249,38 +249,38 @@
       REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
       REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
       REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ItemReport" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ItemReport">
     update ITEM_REPORT
-    <set >
-      <if test="memNo != null" >
+    <set>
+      <if test="memNo != null">
         MEM_NO = #{memNo,jdbcType=VARCHAR},
       </if>
-      <if test="empNo != null" >
+      <if test="empNo != null">
         EMP_NO = #{empNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemNo != null" >
+      <if test="itemNo != null">
         ITEM_NO = #{itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="reportReasons != null" >
+      <if test="reportReasons != null">
         REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
       </if>
-      <if test="reportDescription != null" >
+      <if test="reportDescription != null">
         REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR},
       </if>
-      <if test="reportStatus != null" >
+      <if test="reportStatus != null">
         REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC},
       </if>
-      <if test="reportPic != null" >
+      <if test="reportPic != null">
         REPORT_PIC = #{reportPic,jdbcType=BLOB},
       </if>
     </set>
     where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReport" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReport">
     update ITEM_REPORT
     set MEM_NO = #{memNo,jdbcType=VARCHAR},
       EMP_NO = #{empNo,jdbcType=VARCHAR},
@@ -291,7 +291,307 @@
       REPORT_PIC = #{reportPic,jdbcType=BLOB}
     where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ItemReport" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ItemReport">
+    update ITEM_REPORT
+    set MEM_NO = #{memNo,jdbcType=VARCHAR},
+      EMP_NO = #{empNo,jdbcType=VARCHAR},
+      ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR},
+      REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC}
+    where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ItemReport">
+    <id column="ITEM_REPORT_NO" jdbcType="VARCHAR" property="itemReportNo" />
+    <result column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+    <result column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+    <result column="REPORT_REASONS" jdbcType="VARCHAR" property="reportReasons" />
+    <result column="REPORT_DESCRIPTION" jdbcType="VARCHAR" property="reportDescription" />
+    <result column="REPORT_STATUS" jdbcType="NUMERIC" property="reportStatus" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.ItemReport">
+    <result column="REPORT_PIC" jdbcType="BLOB" property="reportPic" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ITEM_REPORT_NO, MEM_NO, EMP_NO, ITEM_NO, REPORT_REASONS, REPORT_DESCRIPTION, REPORT_STATUS
+  </sql>
+  <sql id="Blob_Column_List">
+    REPORT_PIC
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ITEM_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ITEM_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ITEM_REPORT
+    where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ITEM_REPORT
+    where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample">
+    delete from ITEM_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.ItemReport">
+    insert into ITEM_REPORT (ITEM_REPORT_NO, MEM_NO, EMP_NO, 
+      ITEM_NO, REPORT_REASONS, REPORT_DESCRIPTION, 
+      REPORT_STATUS, REPORT_PIC)
+    values (#{itemReportNo,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR}, #{empNo,jdbcType=VARCHAR}, 
+      #{itemNo,jdbcType=VARCHAR}, #{reportReasons,jdbcType=VARCHAR}, #{reportDescription,jdbcType=VARCHAR}, 
+      #{reportStatus,jdbcType=NUMERIC}, #{reportPic,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ItemReport">
+    insert into ITEM_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemReportNo != null">
+        ITEM_REPORT_NO,
+      </if>
+      <if test="memNo != null">
+        MEM_NO,
+      </if>
+      <if test="empNo != null">
+        EMP_NO,
+      </if>
+      <if test="itemNo != null">
+        ITEM_NO,
+      </if>
+      <if test="reportReasons != null">
+        REPORT_REASONS,
+      </if>
+      <if test="reportDescription != null">
+        REPORT_DESCRIPTION,
+      </if>
+      <if test="reportStatus != null">
+        REPORT_STATUS,
+      </if>
+      <if test="reportPic != null">
+        REPORT_PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemReportNo != null">
+        #{itemReportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null">
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null">
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportReasons != null">
+        #{reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDescription != null">
+        #{reportDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="reportStatus != null">
+        #{reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="reportPic != null">
+        #{reportPic,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemReportExample" resultType="java.lang.Integer">
+    select count(*) from ITEM_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ITEM_REPORT
+    <set>
+      <if test="record.itemReportNo != null">
+        ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null">
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empNo != null">
+        EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemNo != null">
+        ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportReasons != null">
+        REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportDescription != null">
+        REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportStatus != null">
+        REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="record.reportPic != null">
+        REPORT_PIC = #{record.reportPic,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ITEM_REPORT
+    set ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
+      REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC},
+      REPORT_PIC = #{record.reportPic,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ITEM_REPORT
+    set ITEM_REPORT_NO = #{record.itemReportNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      REPORT_REASONS = #{record.reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{record.reportDescription,jdbcType=VARCHAR},
+      REPORT_STATUS = #{record.reportStatus,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ItemReport">
+    update ITEM_REPORT
+    <set>
+      <if test="memNo != null">
+        MEM_NO = #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        EMP_NO = #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null">
+        ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportReasons != null">
+        REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDescription != null">
+        REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="reportStatus != null">
+        REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="reportPic != null">
+        REPORT_PIC = #{reportPic,jdbcType=BLOB},
+      </if>
+    </set>
+    where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.ItemReport">
+    update ITEM_REPORT
+    set MEM_NO = #{memNo,jdbcType=VARCHAR},
+      EMP_NO = #{empNo,jdbcType=VARCHAR},
+      ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      REPORT_REASONS = #{reportReasons,jdbcType=VARCHAR},
+      REPORT_DESCRIPTION = #{reportDescription,jdbcType=VARCHAR},
+      REPORT_STATUS = #{reportStatus,jdbcType=NUMERIC},
+      REPORT_PIC = #{reportPic,jdbcType=BLOB}
+    where ITEM_REPORT_NO = #{itemReportNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ItemReport">
     update ITEM_REPORT
     set MEM_NO = #{memNo,jdbcType=VARCHAR},
       EMP_NO = #{empNo,jdbcType=VARCHAR},

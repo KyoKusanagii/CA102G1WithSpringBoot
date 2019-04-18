@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.ItemMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Item" >
-    <id column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
-    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
-    <result column="ITEM_PRICE" property="itemPrice" jdbcType="NUMERIC" />
-    <result column="ITEM_PRIMARY_CLASS" property="itemPrimaryClass" jdbcType="NUMERIC" />
-    <result column="ITEM_SECONDARY_CLASS" property="itemSecondaryClass" jdbcType="NUMERIC" />
-    <result column="ITEM_OWNER" property="itemOwner" jdbcType="VARCHAR" />
-    <result column="IS_FB_LAUNCH" property="isFbLaunch" jdbcType="NUMERIC" />
-    <result column="IS_MALL_LAUNCH" property="isMallLaunch" jdbcType="NUMERIC" />
-    <result column="ITEM_INVENTORY" property="itemInventory" jdbcType="NUMERIC" />
-    <result column="ITEM_DESCRIPTION" property="itemDescription" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.ItemMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Item">
+    <id column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName" />
+    <result column="ITEM_PRICE" jdbcType="NUMERIC" property="itemPrice" />
+    <result column="ITEM_PRIMARY_CLASS" jdbcType="NUMERIC" property="itemPrimaryClass" />
+    <result column="ITEM_SECONDARY_CLASS" jdbcType="NUMERIC" property="itemSecondaryClass" />
+    <result column="ITEM_OWNER" jdbcType="VARCHAR" property="itemOwner" />
+    <result column="IS_FB_LAUNCH" jdbcType="NUMERIC" property="isFbLaunch" />
+    <result column="IS_MALL_LAUNCH" jdbcType="NUMERIC" property="isMallLaunch" />
+    <result column="ITEM_INVENTORY" jdbcType="NUMERIC" property="itemInventory" />
+    <result column="ITEM_DESCRIPTION" jdbcType="VARCHAR" property="itemDescription" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -42,25 +42,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -71,41 +71,41 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_PRIMARY_CLASS, ITEM_SECONDARY_CLASS, ITEM_OWNER, 
     IS_FB_LAUNCH, IS_MALL_LAUNCH, ITEM_INVENTORY, ITEM_DESCRIPTION
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ItemExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItemExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from ITEM
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ITEM
     where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ITEM
     where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemExample">
     delete from ITEM
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.Item" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Item">
     insert into ITEM (ITEM_NO, ITEM_NAME, ITEM_PRICE, 
       ITEM_PRIMARY_CLASS, ITEM_SECONDARY_CLASS, ITEM_OWNER, 
       IS_FB_LAUNCH, IS_MALL_LAUNCH, ITEM_INVENTORY, 
@@ -115,118 +115,118 @@
       #{isFbLaunch,jdbcType=NUMERIC}, #{isMallLaunch,jdbcType=NUMERIC}, #{itemInventory,jdbcType=NUMERIC}, 
       #{itemDescription,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Item" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Item">
     insert into ITEM
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="itemNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemNo != null">
         ITEM_NO,
       </if>
-      <if test="itemName != null" >
+      <if test="itemName != null">
         ITEM_NAME,
       </if>
-      <if test="itemPrice != null" >
+      <if test="itemPrice != null">
         ITEM_PRICE,
       </if>
-      <if test="itemPrimaryClass != null" >
+      <if test="itemPrimaryClass != null">
         ITEM_PRIMARY_CLASS,
       </if>
-      <if test="itemSecondaryClass != null" >
+      <if test="itemSecondaryClass != null">
         ITEM_SECONDARY_CLASS,
       </if>
-      <if test="itemOwner != null" >
+      <if test="itemOwner != null">
         ITEM_OWNER,
       </if>
-      <if test="isFbLaunch != null" >
+      <if test="isFbLaunch != null">
         IS_FB_LAUNCH,
       </if>
-      <if test="isMallLaunch != null" >
+      <if test="isMallLaunch != null">
         IS_MALL_LAUNCH,
       </if>
-      <if test="itemInventory != null" >
+      <if test="itemInventory != null">
         ITEM_INVENTORY,
       </if>
-      <if test="itemDescription != null" >
+      <if test="itemDescription != null">
         ITEM_DESCRIPTION,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="itemNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemNo != null">
         #{itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemName != null" >
+      <if test="itemName != null">
         #{itemName,jdbcType=VARCHAR},
       </if>
-      <if test="itemPrice != null" >
+      <if test="itemPrice != null">
         #{itemPrice,jdbcType=NUMERIC},
       </if>
-      <if test="itemPrimaryClass != null" >
+      <if test="itemPrimaryClass != null">
         #{itemPrimaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="itemSecondaryClass != null" >
+      <if test="itemSecondaryClass != null">
         #{itemSecondaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="itemOwner != null" >
+      <if test="itemOwner != null">
         #{itemOwner,jdbcType=VARCHAR},
       </if>
-      <if test="isFbLaunch != null" >
+      <if test="isFbLaunch != null">
         #{isFbLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="isMallLaunch != null" >
+      <if test="isMallLaunch != null">
         #{isMallLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="itemInventory != null" >
+      <if test="itemInventory != null">
         #{itemInventory,jdbcType=NUMERIC},
       </if>
-      <if test="itemDescription != null" >
+      <if test="itemDescription != null">
         #{itemDescription,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemExample" resultType="java.lang.Integer">
     select count(*) from ITEM
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update ITEM
-    <set >
-      <if test="record.itemNo != null" >
+    <set>
+      <if test="record.itemNo != null">
         ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemName != null" >
+      <if test="record.itemName != null">
         ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemPrice != null" >
+      <if test="record.itemPrice != null">
         ITEM_PRICE = #{record.itemPrice,jdbcType=NUMERIC},
       </if>
-      <if test="record.itemPrimaryClass != null" >
+      <if test="record.itemPrimaryClass != null">
         ITEM_PRIMARY_CLASS = #{record.itemPrimaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="record.itemSecondaryClass != null" >
+      <if test="record.itemSecondaryClass != null">
         ITEM_SECONDARY_CLASS = #{record.itemSecondaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="record.itemOwner != null" >
+      <if test="record.itemOwner != null">
         ITEM_OWNER = #{record.itemOwner,jdbcType=VARCHAR},
       </if>
-      <if test="record.isFbLaunch != null" >
+      <if test="record.isFbLaunch != null">
         IS_FB_LAUNCH = #{record.isFbLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="record.isMallLaunch != null" >
+      <if test="record.isMallLaunch != null">
         IS_MALL_LAUNCH = #{record.isMallLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="record.itemInventory != null" >
+      <if test="record.itemInventory != null">
         ITEM_INVENTORY = #{record.itemInventory,jdbcType=NUMERIC},
       </if>
-      <if test="record.itemDescription != null" >
+      <if test="record.itemDescription != null">
         ITEM_DESCRIPTION = #{record.itemDescription,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update ITEM
     set ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
       ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
@@ -238,44 +238,331 @@
       IS_MALL_LAUNCH = #{record.isMallLaunch,jdbcType=NUMERIC},
       ITEM_INVENTORY = #{record.itemInventory,jdbcType=NUMERIC},
       ITEM_DESCRIPTION = #{record.itemDescription,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Item" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Item">
     update ITEM
-    <set >
-      <if test="itemName != null" >
+    <set>
+      <if test="itemName != null">
         ITEM_NAME = #{itemName,jdbcType=VARCHAR},
       </if>
-      <if test="itemPrice != null" >
+      <if test="itemPrice != null">
         ITEM_PRICE = #{itemPrice,jdbcType=NUMERIC},
       </if>
-      <if test="itemPrimaryClass != null" >
+      <if test="itemPrimaryClass != null">
         ITEM_PRIMARY_CLASS = #{itemPrimaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="itemSecondaryClass != null" >
+      <if test="itemSecondaryClass != null">
         ITEM_SECONDARY_CLASS = #{itemSecondaryClass,jdbcType=NUMERIC},
       </if>
-      <if test="itemOwner != null" >
+      <if test="itemOwner != null">
         ITEM_OWNER = #{itemOwner,jdbcType=VARCHAR},
       </if>
-      <if test="isFbLaunch != null" >
+      <if test="isFbLaunch != null">
         IS_FB_LAUNCH = #{isFbLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="isMallLaunch != null" >
+      <if test="isMallLaunch != null">
         IS_MALL_LAUNCH = #{isMallLaunch,jdbcType=NUMERIC},
       </if>
-      <if test="itemInventory != null" >
+      <if test="itemInventory != null">
         ITEM_INVENTORY = #{itemInventory,jdbcType=NUMERIC},
       </if>
-      <if test="itemDescription != null" >
+      <if test="itemDescription != null">
         ITEM_DESCRIPTION = #{itemDescription,jdbcType=VARCHAR},
       </if>
     </set>
     where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Item" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Item">
+    update ITEM
+    set ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_PRICE = #{itemPrice,jdbcType=NUMERIC},
+      ITEM_PRIMARY_CLASS = #{itemPrimaryClass,jdbcType=NUMERIC},
+      ITEM_SECONDARY_CLASS = #{itemSecondaryClass,jdbcType=NUMERIC},
+      ITEM_OWNER = #{itemOwner,jdbcType=VARCHAR},
+      IS_FB_LAUNCH = #{isFbLaunch,jdbcType=NUMERIC},
+      IS_MALL_LAUNCH = #{isMallLaunch,jdbcType=NUMERIC},
+      ITEM_INVENTORY = #{itemInventory,jdbcType=NUMERIC},
+      ITEM_DESCRIPTION = #{itemDescription,jdbcType=VARCHAR}
+    where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Item">
+    <id column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName" />
+    <result column="ITEM_PRICE" jdbcType="NUMERIC" property="itemPrice" />
+    <result column="ITEM_PRIMARY_CLASS" jdbcType="NUMERIC" property="itemPrimaryClass" />
+    <result column="ITEM_SECONDARY_CLASS" jdbcType="NUMERIC" property="itemSecondaryClass" />
+    <result column="ITEM_OWNER" jdbcType="VARCHAR" property="itemOwner" />
+    <result column="IS_FB_LAUNCH" jdbcType="NUMERIC" property="isFbLaunch" />
+    <result column="IS_MALL_LAUNCH" jdbcType="NUMERIC" property="isMallLaunch" />
+    <result column="ITEM_INVENTORY" jdbcType="NUMERIC" property="itemInventory" />
+    <result column="ITEM_DESCRIPTION" jdbcType="VARCHAR" property="itemDescription" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_PRIMARY_CLASS, ITEM_SECONDARY_CLASS, ITEM_OWNER, 
+    IS_FB_LAUNCH, IS_MALL_LAUNCH, ITEM_INVENTORY, ITEM_DESCRIPTION
+  </sql>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ITEM
+    where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ITEM
+    where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItemExample">
+    delete from ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Item">
+    insert into ITEM (ITEM_NO, ITEM_NAME, ITEM_PRICE, 
+      ITEM_PRIMARY_CLASS, ITEM_SECONDARY_CLASS, ITEM_OWNER, 
+      IS_FB_LAUNCH, IS_MALL_LAUNCH, ITEM_INVENTORY, 
+      ITEM_DESCRIPTION)
+    values (#{itemNo,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, #{itemPrice,jdbcType=NUMERIC}, 
+      #{itemPrimaryClass,jdbcType=NUMERIC}, #{itemSecondaryClass,jdbcType=NUMERIC}, #{itemOwner,jdbcType=VARCHAR}, 
+      #{isFbLaunch,jdbcType=NUMERIC}, #{isMallLaunch,jdbcType=NUMERIC}, #{itemInventory,jdbcType=NUMERIC}, 
+      #{itemDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Item">
+    insert into ITEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemNo != null">
+        ITEM_NO,
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME,
+      </if>
+      <if test="itemPrice != null">
+        ITEM_PRICE,
+      </if>
+      <if test="itemPrimaryClass != null">
+        ITEM_PRIMARY_CLASS,
+      </if>
+      <if test="itemSecondaryClass != null">
+        ITEM_SECONDARY_CLASS,
+      </if>
+      <if test="itemOwner != null">
+        ITEM_OWNER,
+      </if>
+      <if test="isFbLaunch != null">
+        IS_FB_LAUNCH,
+      </if>
+      <if test="isMallLaunch != null">
+        IS_MALL_LAUNCH,
+      </if>
+      <if test="itemInventory != null">
+        ITEM_INVENTORY,
+      </if>
+      <if test="itemDescription != null">
+        ITEM_DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemNo != null">
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null">
+        #{itemPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="itemPrimaryClass != null">
+        #{itemPrimaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="itemSecondaryClass != null">
+        #{itemSecondaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="itemOwner != null">
+        #{itemOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="isFbLaunch != null">
+        #{isFbLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="isMallLaunch != null">
+        #{isMallLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="itemInventory != null">
+        #{itemInventory,jdbcType=NUMERIC},
+      </if>
+      <if test="itemDescription != null">
+        #{itemDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItemExample" resultType="java.lang.Integer">
+    select count(*) from ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ITEM
+    <set>
+      <if test="record.itemNo != null">
+        ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null">
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemPrice != null">
+        ITEM_PRICE = #{record.itemPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemPrimaryClass != null">
+        ITEM_PRIMARY_CLASS = #{record.itemPrimaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemSecondaryClass != null">
+        ITEM_SECONDARY_CLASS = #{record.itemSecondaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemOwner != null">
+        ITEM_OWNER = #{record.itemOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFbLaunch != null">
+        IS_FB_LAUNCH = #{record.isFbLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="record.isMallLaunch != null">
+        IS_MALL_LAUNCH = #{record.isMallLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemInventory != null">
+        ITEM_INVENTORY = #{record.itemInventory,jdbcType=NUMERIC},
+      </if>
+      <if test="record.itemDescription != null">
+        ITEM_DESCRIPTION = #{record.itemDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ITEM
+    set ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      ITEM_PRICE = #{record.itemPrice,jdbcType=NUMERIC},
+      ITEM_PRIMARY_CLASS = #{record.itemPrimaryClass,jdbcType=NUMERIC},
+      ITEM_SECONDARY_CLASS = #{record.itemSecondaryClass,jdbcType=NUMERIC},
+      ITEM_OWNER = #{record.itemOwner,jdbcType=VARCHAR},
+      IS_FB_LAUNCH = #{record.isFbLaunch,jdbcType=NUMERIC},
+      IS_MALL_LAUNCH = #{record.isMallLaunch,jdbcType=NUMERIC},
+      ITEM_INVENTORY = #{record.itemInventory,jdbcType=NUMERIC},
+      ITEM_DESCRIPTION = #{record.itemDescription,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Item">
+    update ITEM
+    <set>
+      <if test="itemName != null">
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null">
+        ITEM_PRICE = #{itemPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="itemPrimaryClass != null">
+        ITEM_PRIMARY_CLASS = #{itemPrimaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="itemSecondaryClass != null">
+        ITEM_SECONDARY_CLASS = #{itemSecondaryClass,jdbcType=NUMERIC},
+      </if>
+      <if test="itemOwner != null">
+        ITEM_OWNER = #{itemOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="isFbLaunch != null">
+        IS_FB_LAUNCH = #{isFbLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="isMallLaunch != null">
+        IS_MALL_LAUNCH = #{isMallLaunch,jdbcType=NUMERIC},
+      </if>
+      <if test="itemInventory != null">
+        ITEM_INVENTORY = #{itemInventory,jdbcType=NUMERIC},
+      </if>
+      <if test="itemDescription != null">
+        ITEM_DESCRIPTION = #{itemDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Item">
     update ITEM
     set ITEM_NAME = #{itemName,jdbcType=VARCHAR},
       ITEM_PRICE = #{itemPrice,jdbcType=NUMERIC},

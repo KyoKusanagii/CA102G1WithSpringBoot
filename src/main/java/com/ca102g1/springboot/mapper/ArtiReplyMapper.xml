@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.ArtiReplyMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ArtiReply" >
-    <id column="ARTI_NO" property="artiNo" jdbcType="VARCHAR" />
-    <id column="REP_NO" property="repNo" jdbcType="NUMERIC" />
-    <result column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
-    <result column="REP_CONTENT" property="repContent" jdbcType="VARCHAR" />
-    <result column="REP_TIME" property="repTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.ArtiReplyMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ArtiReply">
+    <id column="ARTI_NO" jdbcType="VARCHAR" property="artiNo" />
+    <id column="REP_NO" jdbcType="NUMERIC" property="repNo" />
+    <result column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="REP_CONTENT" jdbcType="VARCHAR" property="repContent" />
+    <result column="REP_TIME" jdbcType="TIMESTAMP" property="repTime" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -37,25 +37,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -66,141 +66,348 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     ARTI_NO, REP_NO, MEM_NO, REP_CONTENT, REP_TIME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from ARTI_REPLY
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ArtiReplyKey" >
+  <select id="selectByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReplyKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ARTI_REPLY
     where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
       and REP_NO = #{repNo,jdbcType=NUMERIC}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReplyKey" >
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReplyKey">
     delete from ARTI_REPLY
     where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
       and REP_NO = #{repNo,jdbcType=NUMERIC}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample">
     delete from ARTI_REPLY
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.ArtiReply" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.ArtiReply">
     insert into ARTI_REPLY (ARTI_NO, REP_NO, MEM_NO, 
       REP_CONTENT, REP_TIME)
     values (#{artiNo,jdbcType=VARCHAR}, #{repNo,jdbcType=NUMERIC}, #{memNo,jdbcType=VARCHAR}, 
       #{repContent,jdbcType=VARCHAR}, #{repTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ArtiReply" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ArtiReply">
     insert into ARTI_REPLY
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="artiNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="artiNo != null">
         ARTI_NO,
       </if>
-      <if test="repNo != null" >
+      <if test="repNo != null">
         REP_NO,
       </if>
-      <if test="memNo != null" >
+      <if test="memNo != null">
         MEM_NO,
       </if>
-      <if test="repContent != null" >
+      <if test="repContent != null">
         REP_CONTENT,
       </if>
-      <if test="repTime != null" >
+      <if test="repTime != null">
         REP_TIME,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="artiNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="artiNo != null">
         #{artiNo,jdbcType=VARCHAR},
       </if>
-      <if test="repNo != null" >
+      <if test="repNo != null">
         #{repNo,jdbcType=NUMERIC},
       </if>
-      <if test="memNo != null" >
+      <if test="memNo != null">
         #{memNo,jdbcType=VARCHAR},
       </if>
-      <if test="repContent != null" >
+      <if test="repContent != null">
         #{repContent,jdbcType=VARCHAR},
       </if>
-      <if test="repTime != null" >
+      <if test="repTime != null">
         #{repTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" resultType="java.lang.Integer">
     select count(*) from ARTI_REPLY
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update ARTI_REPLY
-    <set >
-      <if test="record.artiNo != null" >
+    <set>
+      <if test="record.artiNo != null">
         ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.repNo != null" >
+      <if test="record.repNo != null">
         REP_NO = #{record.repNo,jdbcType=NUMERIC},
       </if>
-      <if test="record.memNo != null" >
+      <if test="record.memNo != null">
         MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.repContent != null" >
+      <if test="record.repContent != null">
         REP_CONTENT = #{record.repContent,jdbcType=VARCHAR},
       </if>
-      <if test="record.repTime != null" >
+      <if test="record.repTime != null">
         REP_TIME = #{record.repTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update ARTI_REPLY
     set ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
       REP_NO = #{record.repNo,jdbcType=NUMERIC},
       MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       REP_CONTENT = #{record.repContent,jdbcType=VARCHAR},
       REP_TIME = #{record.repTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ArtiReply" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ArtiReply">
     update ARTI_REPLY
-    <set >
-      <if test="memNo != null" >
+    <set>
+      <if test="memNo != null">
         MEM_NO = #{memNo,jdbcType=VARCHAR},
       </if>
-      <if test="repContent != null" >
+      <if test="repContent != null">
         REP_CONTENT = #{repContent,jdbcType=VARCHAR},
       </if>
-      <if test="repTime != null" >
+      <if test="repTime != null">
         REP_TIME = #{repTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
       and REP_NO = #{repNo,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReply" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReply">
+    update ARTI_REPLY
+    set MEM_NO = #{memNo,jdbcType=VARCHAR},
+      REP_CONTENT = #{repContent,jdbcType=VARCHAR},
+      REP_TIME = #{repTime,jdbcType=TIMESTAMP}
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+      and REP_NO = #{repNo,jdbcType=NUMERIC}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.ArtiReply">
+    <id column="ARTI_NO" jdbcType="VARCHAR" property="artiNo" />
+    <id column="REP_NO" jdbcType="NUMERIC" property="repNo" />
+    <result column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="REP_CONTENT" jdbcType="VARCHAR" property="repContent" />
+    <result column="REP_TIME" jdbcType="TIMESTAMP" property="repTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ARTI_NO, REP_NO, MEM_NO, REP_CONTENT, REP_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ARTI_REPLY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReplyKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ARTI_REPLY
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+      and REP_NO = #{repNo,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReplyKey">
+    delete from ARTI_REPLY
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+      and REP_NO = #{repNo,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample">
+    delete from ARTI_REPLY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.ArtiReply">
+    insert into ARTI_REPLY (ARTI_NO, REP_NO, MEM_NO, 
+      REP_CONTENT, REP_TIME)
+    values (#{artiNo,jdbcType=VARCHAR}, #{repNo,jdbcType=NUMERIC}, #{memNo,jdbcType=VARCHAR}, 
+      #{repContent,jdbcType=VARCHAR}, #{repTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.ArtiReply">
+    insert into ARTI_REPLY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="artiNo != null">
+        ARTI_NO,
+      </if>
+      <if test="repNo != null">
+        REP_NO,
+      </if>
+      <if test="memNo != null">
+        MEM_NO,
+      </if>
+      <if test="repContent != null">
+        REP_CONTENT,
+      </if>
+      <if test="repTime != null">
+        REP_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="artiNo != null">
+        #{artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repNo != null">
+        #{repNo,jdbcType=NUMERIC},
+      </if>
+      <if test="memNo != null">
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repContent != null">
+        #{repContent,jdbcType=VARCHAR},
+      </if>
+      <if test="repTime != null">
+        #{repTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ArtiReplyExample" resultType="java.lang.Integer">
+    select count(*) from ARTI_REPLY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ARTI_REPLY
+    <set>
+      <if test="record.artiNo != null">
+        ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repNo != null">
+        REP_NO = #{record.repNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.memNo != null">
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repContent != null">
+        REP_CONTENT = #{record.repContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repTime != null">
+        REP_TIME = #{record.repTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ARTI_REPLY
+    set ARTI_NO = #{record.artiNo,jdbcType=VARCHAR},
+      REP_NO = #{record.repNo,jdbcType=NUMERIC},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      REP_CONTENT = #{record.repContent,jdbcType=VARCHAR},
+      REP_TIME = #{record.repTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.ArtiReply">
+    update ARTI_REPLY
+    <set>
+      <if test="memNo != null">
+        MEM_NO = #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repContent != null">
+        REP_CONTENT = #{repContent,jdbcType=VARCHAR},
+      </if>
+      <if test="repTime != null">
+        REP_TIME = #{repTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ARTI_NO = #{artiNo,jdbcType=VARCHAR}
+      and REP_NO = #{repNo,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.ArtiReply">
     update ARTI_REPLY
     set MEM_NO = #{memNo,jdbcType=VARCHAR},
       REP_CONTENT = #{repContent,jdbcType=VARCHAR},

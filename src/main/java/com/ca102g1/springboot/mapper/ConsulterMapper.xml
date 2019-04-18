@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.ConsulterMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Consulter" >
-    <result column="CONSULTER_NO" property="consulterNo" jdbcType="VARCHAR" />
-    <result column="CONSULTER_NAME" property="consulterName" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.ConsulterMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Consulter">
+    <result column="CONSULTER_NO" jdbcType="VARCHAR" property="consulterNo" />
+    <result column="CONSULTER_NAME" jdbcType="VARCHAR" property="consulterName" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Consulter" extends="BaseResultMap" >
-    <result column="CONSULTER_ICON" property="consulterIcon" jdbcType="BLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Consulter">
+    <result column="CONSULTER_ICON" jdbcType="BLOB" property="consulterIcon" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -37,25 +37,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -66,116 +66,294 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     CONSULTER_NO, CONSULTER_NAME
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     CONSULTER_ICON
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.ConsulterExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from CONSULTER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ConsulterExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from CONSULTER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample">
     delete from CONSULTER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.Consulter" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Consulter">
     insert into CONSULTER (CONSULTER_NO, CONSULTER_NAME, CONSULTER_ICON
       )
     values (#{consulterNo,jdbcType=VARCHAR}, #{consulterName,jdbcType=VARCHAR}, #{consulterIcon,jdbcType=BLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Consulter" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Consulter">
     insert into CONSULTER
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="consulterNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="consulterNo != null">
         CONSULTER_NO,
       </if>
-      <if test="consulterName != null" >
+      <if test="consulterName != null">
         CONSULTER_NAME,
       </if>
-      <if test="consulterIcon != null" >
+      <if test="consulterIcon != null">
         CONSULTER_ICON,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="consulterNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="consulterNo != null">
         #{consulterNo,jdbcType=VARCHAR},
       </if>
-      <if test="consulterName != null" >
+      <if test="consulterName != null">
         #{consulterName,jdbcType=VARCHAR},
       </if>
-      <if test="consulterIcon != null" >
+      <if test="consulterIcon != null">
         #{consulterIcon,jdbcType=BLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultType="java.lang.Integer">
     select count(*) from CONSULTER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update CONSULTER
-    <set >
-      <if test="record.consulterNo != null" >
+    <set>
+      <if test="record.consulterNo != null">
         CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.consulterName != null" >
+      <if test="record.consulterName != null">
         CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR},
       </if>
-      <if test="record.consulterIcon != null" >
+      <if test="record.consulterIcon != null">
         CONSULTER_ICON = #{record.consulterIcon,jdbcType=BLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update CONSULTER
     set CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
       CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR},
       CONSULTER_ICON = #{record.consulterIcon,jdbcType=BLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update CONSULTER
     set CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
       CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Consulter">
+    <result column="CONSULTER_NO" jdbcType="VARCHAR" property="consulterNo" />
+    <result column="CONSULTER_NAME" jdbcType="VARCHAR" property="consulterName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Consulter">
+    <result column="CONSULTER_ICON" jdbcType="BLOB" property="consulterIcon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CONSULTER_NO, CONSULTER_NAME
+  </sql>
+  <sql id="Blob_Column_List">
+    CONSULTER_ICON
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from CONSULTER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CONSULTER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample">
+    delete from CONSULTER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Consulter">
+    insert into CONSULTER (CONSULTER_NO, CONSULTER_NAME, CONSULTER_ICON
+      )
+    values (#{consulterNo,jdbcType=VARCHAR}, #{consulterName,jdbcType=VARCHAR}, #{consulterIcon,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Consulter">
+    insert into CONSULTER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="consulterNo != null">
+        CONSULTER_NO,
+      </if>
+      <if test="consulterName != null">
+        CONSULTER_NAME,
+      </if>
+      <if test="consulterIcon != null">
+        CONSULTER_ICON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="consulterNo != null">
+        #{consulterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="consulterName != null">
+        #{consulterName,jdbcType=VARCHAR},
+      </if>
+      <if test="consulterIcon != null">
+        #{consulterIcon,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ConsulterExample" resultType="java.lang.Integer">
+    select count(*) from CONSULTER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CONSULTER
+    <set>
+      <if test="record.consulterNo != null">
+        CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consulterName != null">
+        CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consulterIcon != null">
+        CONSULTER_ICON = #{record.consulterIcon,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update CONSULTER
+    set CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
+      CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR},
+      CONSULTER_ICON = #{record.consulterIcon,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CONSULTER
+    set CONSULTER_NO = #{record.consulterNo,jdbcType=VARCHAR},
+      CONSULTER_NAME = #{record.consulterName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>

@@ -1,49 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.MemberMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Member" >
-    <id column="MEM_NO" property="memNo" jdbcType="VARCHAR" />
-    <result column="MEM_ID" property="memId" jdbcType="VARCHAR" />
-    <result column="MEM_PSW" property="memPsw" jdbcType="VARCHAR" />
-    <result column="MEM_EMAIL" property="memEmail" jdbcType="VARCHAR" />
-    <result column="MEM_FBID" property="memFbid" jdbcType="VARCHAR" />
-    <result column="MEM_NAME" property="memName" jdbcType="VARCHAR" />
-    <result column="MEM_SEX" property="memSex" jdbcType="VARCHAR" />
-    <result column="MEM_BIRTH" property="memBirth" jdbcType="TIMESTAMP" />
-    <result column="MEM_MOBILE" property="memMobile" jdbcType="VARCHAR" />
-    <result column="MEM_POST" property="memPost" jdbcType="VARCHAR" />
-    <result column="MEM_ADDRESS" property="memAddress" jdbcType="VARCHAR" />
-    <result column="MEM_RECEIVEADD" property="memReceiveadd" jdbcType="VARCHAR" />
-    <result column="MEM_ACTIVECODE" property="memActivecode" jdbcType="VARCHAR" />
-    <result column="MEM_CONDITION" property="memCondition" jdbcType="NUMERIC" />
-    <result column="MEM_ARTAUTH" property="memArtauth" jdbcType="NUMERIC" />
-    <result column="MEM_MARTNAME" property="memMartname" jdbcType="VARCHAR" />
-    <result column="MEM_MARTINFO" property="memMartinfo" jdbcType="VARCHAR" />
-    <result column="MEM_RECOMMEND" property="memRecommend" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Member">
+    <id column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="MEM_ID" jdbcType="VARCHAR" property="memId" />
+    <result column="MEM_PSW" jdbcType="VARCHAR" property="memPsw" />
+    <result column="MEM_EMAIL" jdbcType="VARCHAR" property="memEmail" />
+    <result column="MEM_FBID" jdbcType="VARCHAR" property="memFbid" />
+    <result column="MEM_NAME" jdbcType="VARCHAR" property="memName" />
+    <result column="MEM_SEX" jdbcType="VARCHAR" property="memSex" />
+    <result column="MEM_BIRTH" jdbcType="TIMESTAMP" property="memBirth" />
+    <result column="MEM_MOBILE" jdbcType="VARCHAR" property="memMobile" />
+    <result column="MEM_POST" jdbcType="VARCHAR" property="memPost" />
+    <result column="MEM_ADDRESS" jdbcType="VARCHAR" property="memAddress" />
+    <result column="MEM_RECEIVEADD" jdbcType="VARCHAR" property="memReceiveadd" />
+    <result column="MEM_ACTIVECODE" jdbcType="VARCHAR" property="memActivecode" />
+    <result column="MEM_CONDITION" jdbcType="NUMERIC" property="memCondition" />
+    <result column="MEM_ARTAUTH" jdbcType="NUMERIC" property="memArtauth" />
+    <result column="MEM_MARTNAME" jdbcType="VARCHAR" property="memMartname" />
+    <result column="MEM_MARTINFO" jdbcType="VARCHAR" property="memMartinfo" />
+    <result column="MEM_RECOMMEND" jdbcType="VARCHAR" property="memRecommend" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.MemberWithBLOBs" extends="BaseResultMap" >
-    <result column="MEM_PROFILEPIC" property="memProfilepic" jdbcType="BLOB" />
-    <result column="MEM_MARTCOVER" property="memMartcover" jdbcType="BLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.MemberWithBLOBs">
+    <result column="MEM_PROFILEPIC" jdbcType="BLOB" property="memProfilepic" />
+    <result column="MEM_MARTCOVER" jdbcType="BLOB" property="memMartcover" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -54,25 +54,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -83,45 +83,45 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     MEM_NO, MEM_ID, MEM_PSW, MEM_EMAIL, MEM_FBID, MEM_NAME, MEM_SEX, MEM_BIRTH, MEM_MOBILE, 
     MEM_POST, MEM_ADDRESS, MEM_RECEIVEADD, MEM_ACTIVECODE, MEM_CONDITION, MEM_ARTAUTH, 
     MEM_MARTNAME, MEM_MARTINFO, MEM_RECOMMEND
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     MEM_PROFILEPIC, MEM_MARTCOVER
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from MEMBER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.MemberExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.MemberExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from MEMBER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -129,17 +129,17 @@
     from MEMBER
     where MEM_NO = #{memNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from MEMBER
     where MEM_NO = #{memNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.MemberExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.MemberExample">
     delete from MEMBER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
     insert into MEMBER (MEM_NO, MEM_ID, MEM_PSW, 
       MEM_EMAIL, MEM_FBID, MEM_NAME, 
       MEM_SEX, MEM_BIRTH, MEM_MOBILE, 
@@ -155,208 +155,208 @@
       #{memMartname,jdbcType=VARCHAR}, #{memMartinfo,jdbcType=VARCHAR}, #{memRecommend,jdbcType=VARCHAR}, 
       #{memProfilepic,jdbcType=BLOB}, #{memMartcover,jdbcType=BLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
     insert into MEMBER
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="memNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memNo != null">
         MEM_NO,
       </if>
-      <if test="memId != null" >
+      <if test="memId != null">
         MEM_ID,
       </if>
-      <if test="memPsw != null" >
+      <if test="memPsw != null">
         MEM_PSW,
       </if>
-      <if test="memEmail != null" >
+      <if test="memEmail != null">
         MEM_EMAIL,
       </if>
-      <if test="memFbid != null" >
+      <if test="memFbid != null">
         MEM_FBID,
       </if>
-      <if test="memName != null" >
+      <if test="memName != null">
         MEM_NAME,
       </if>
-      <if test="memSex != null" >
+      <if test="memSex != null">
         MEM_SEX,
       </if>
-      <if test="memBirth != null" >
+      <if test="memBirth != null">
         MEM_BIRTH,
       </if>
-      <if test="memMobile != null" >
+      <if test="memMobile != null">
         MEM_MOBILE,
       </if>
-      <if test="memPost != null" >
+      <if test="memPost != null">
         MEM_POST,
       </if>
-      <if test="memAddress != null" >
+      <if test="memAddress != null">
         MEM_ADDRESS,
       </if>
-      <if test="memReceiveadd != null" >
+      <if test="memReceiveadd != null">
         MEM_RECEIVEADD,
       </if>
-      <if test="memActivecode != null" >
+      <if test="memActivecode != null">
         MEM_ACTIVECODE,
       </if>
-      <if test="memCondition != null" >
+      <if test="memCondition != null">
         MEM_CONDITION,
       </if>
-      <if test="memArtauth != null" >
+      <if test="memArtauth != null">
         MEM_ARTAUTH,
       </if>
-      <if test="memMartname != null" >
+      <if test="memMartname != null">
         MEM_MARTNAME,
       </if>
-      <if test="memMartinfo != null" >
+      <if test="memMartinfo != null">
         MEM_MARTINFO,
       </if>
-      <if test="memRecommend != null" >
+      <if test="memRecommend != null">
         MEM_RECOMMEND,
       </if>
-      <if test="memProfilepic != null" >
+      <if test="memProfilepic != null">
         MEM_PROFILEPIC,
       </if>
-      <if test="memMartcover != null" >
+      <if test="memMartcover != null">
         MEM_MARTCOVER,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="memNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memNo != null">
         #{memNo,jdbcType=VARCHAR},
       </if>
-      <if test="memId != null" >
+      <if test="memId != null">
         #{memId,jdbcType=VARCHAR},
       </if>
-      <if test="memPsw != null" >
+      <if test="memPsw != null">
         #{memPsw,jdbcType=VARCHAR},
       </if>
-      <if test="memEmail != null" >
+      <if test="memEmail != null">
         #{memEmail,jdbcType=VARCHAR},
       </if>
-      <if test="memFbid != null" >
+      <if test="memFbid != null">
         #{memFbid,jdbcType=VARCHAR},
       </if>
-      <if test="memName != null" >
+      <if test="memName != null">
         #{memName,jdbcType=VARCHAR},
       </if>
-      <if test="memSex != null" >
+      <if test="memSex != null">
         #{memSex,jdbcType=VARCHAR},
       </if>
-      <if test="memBirth != null" >
+      <if test="memBirth != null">
         #{memBirth,jdbcType=TIMESTAMP},
       </if>
-      <if test="memMobile != null" >
+      <if test="memMobile != null">
         #{memMobile,jdbcType=VARCHAR},
       </if>
-      <if test="memPost != null" >
+      <if test="memPost != null">
         #{memPost,jdbcType=VARCHAR},
       </if>
-      <if test="memAddress != null" >
+      <if test="memAddress != null">
         #{memAddress,jdbcType=VARCHAR},
       </if>
-      <if test="memReceiveadd != null" >
+      <if test="memReceiveadd != null">
         #{memReceiveadd,jdbcType=VARCHAR},
       </if>
-      <if test="memActivecode != null" >
+      <if test="memActivecode != null">
         #{memActivecode,jdbcType=VARCHAR},
       </if>
-      <if test="memCondition != null" >
+      <if test="memCondition != null">
         #{memCondition,jdbcType=NUMERIC},
       </if>
-      <if test="memArtauth != null" >
+      <if test="memArtauth != null">
         #{memArtauth,jdbcType=NUMERIC},
       </if>
-      <if test="memMartname != null" >
+      <if test="memMartname != null">
         #{memMartname,jdbcType=VARCHAR},
       </if>
-      <if test="memMartinfo != null" >
+      <if test="memMartinfo != null">
         #{memMartinfo,jdbcType=VARCHAR},
       </if>
-      <if test="memRecommend != null" >
+      <if test="memRecommend != null">
         #{memRecommend,jdbcType=VARCHAR},
       </if>
-      <if test="memProfilepic != null" >
+      <if test="memProfilepic != null">
         #{memProfilepic,jdbcType=BLOB},
       </if>
-      <if test="memMartcover != null" >
+      <if test="memMartcover != null">
         #{memMartcover,jdbcType=BLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.MemberExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.MemberExample" resultType="java.lang.Integer">
     select count(*) from MEMBER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update MEMBER
-    <set >
-      <if test="record.memNo != null" >
+    <set>
+      <if test="record.memNo != null">
         MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.memId != null" >
+      <if test="record.memId != null">
         MEM_ID = #{record.memId,jdbcType=VARCHAR},
       </if>
-      <if test="record.memPsw != null" >
+      <if test="record.memPsw != null">
         MEM_PSW = #{record.memPsw,jdbcType=VARCHAR},
       </if>
-      <if test="record.memEmail != null" >
+      <if test="record.memEmail != null">
         MEM_EMAIL = #{record.memEmail,jdbcType=VARCHAR},
       </if>
-      <if test="record.memFbid != null" >
+      <if test="record.memFbid != null">
         MEM_FBID = #{record.memFbid,jdbcType=VARCHAR},
       </if>
-      <if test="record.memName != null" >
+      <if test="record.memName != null">
         MEM_NAME = #{record.memName,jdbcType=VARCHAR},
       </if>
-      <if test="record.memSex != null" >
+      <if test="record.memSex != null">
         MEM_SEX = #{record.memSex,jdbcType=VARCHAR},
       </if>
-      <if test="record.memBirth != null" >
+      <if test="record.memBirth != null">
         MEM_BIRTH = #{record.memBirth,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.memMobile != null" >
+      <if test="record.memMobile != null">
         MEM_MOBILE = #{record.memMobile,jdbcType=VARCHAR},
       </if>
-      <if test="record.memPost != null" >
+      <if test="record.memPost != null">
         MEM_POST = #{record.memPost,jdbcType=VARCHAR},
       </if>
-      <if test="record.memAddress != null" >
+      <if test="record.memAddress != null">
         MEM_ADDRESS = #{record.memAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.memReceiveadd != null" >
+      <if test="record.memReceiveadd != null">
         MEM_RECEIVEADD = #{record.memReceiveadd,jdbcType=VARCHAR},
       </if>
-      <if test="record.memActivecode != null" >
+      <if test="record.memActivecode != null">
         MEM_ACTIVECODE = #{record.memActivecode,jdbcType=VARCHAR},
       </if>
-      <if test="record.memCondition != null" >
+      <if test="record.memCondition != null">
         MEM_CONDITION = #{record.memCondition,jdbcType=NUMERIC},
       </if>
-      <if test="record.memArtauth != null" >
+      <if test="record.memArtauth != null">
         MEM_ARTAUTH = #{record.memArtauth,jdbcType=NUMERIC},
       </if>
-      <if test="record.memMartname != null" >
+      <if test="record.memMartname != null">
         MEM_MARTNAME = #{record.memMartname,jdbcType=VARCHAR},
       </if>
-      <if test="record.memMartinfo != null" >
+      <if test="record.memMartinfo != null">
         MEM_MARTINFO = #{record.memMartinfo,jdbcType=VARCHAR},
       </if>
-      <if test="record.memRecommend != null" >
+      <if test="record.memRecommend != null">
         MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR},
       </if>
-      <if test="record.memProfilepic != null" >
+      <if test="record.memProfilepic != null">
         MEM_PROFILEPIC = #{record.memProfilepic,jdbcType=BLOB},
       </if>
-      <if test="record.memMartcover != null" >
+      <if test="record.memMartcover != null">
         MEM_MARTCOVER = #{record.memMartcover,jdbcType=BLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update MEMBER
     set MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       MEM_ID = #{record.memId,jdbcType=VARCHAR},
@@ -378,11 +378,11 @@
       MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR},
       MEM_PROFILEPIC = #{record.memProfilepic,jdbcType=BLOB},
       MEM_MARTCOVER = #{record.memMartcover,jdbcType=BLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update MEMBER
     set MEM_NO = #{record.memNo,jdbcType=VARCHAR},
       MEM_ID = #{record.memId,jdbcType=VARCHAR},
@@ -402,74 +402,74 @@
       MEM_MARTNAME = #{record.memMartname,jdbcType=VARCHAR},
       MEM_MARTINFO = #{record.memMartinfo,jdbcType=VARCHAR},
       MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
     update MEMBER
-    <set >
-      <if test="memId != null" >
+    <set>
+      <if test="memId != null">
         MEM_ID = #{memId,jdbcType=VARCHAR},
       </if>
-      <if test="memPsw != null" >
+      <if test="memPsw != null">
         MEM_PSW = #{memPsw,jdbcType=VARCHAR},
       </if>
-      <if test="memEmail != null" >
+      <if test="memEmail != null">
         MEM_EMAIL = #{memEmail,jdbcType=VARCHAR},
       </if>
-      <if test="memFbid != null" >
+      <if test="memFbid != null">
         MEM_FBID = #{memFbid,jdbcType=VARCHAR},
       </if>
-      <if test="memName != null" >
+      <if test="memName != null">
         MEM_NAME = #{memName,jdbcType=VARCHAR},
       </if>
-      <if test="memSex != null" >
+      <if test="memSex != null">
         MEM_SEX = #{memSex,jdbcType=VARCHAR},
       </if>
-      <if test="memBirth != null" >
+      <if test="memBirth != null">
         MEM_BIRTH = #{memBirth,jdbcType=TIMESTAMP},
       </if>
-      <if test="memMobile != null" >
+      <if test="memMobile != null">
         MEM_MOBILE = #{memMobile,jdbcType=VARCHAR},
       </if>
-      <if test="memPost != null" >
+      <if test="memPost != null">
         MEM_POST = #{memPost,jdbcType=VARCHAR},
       </if>
-      <if test="memAddress != null" >
+      <if test="memAddress != null">
         MEM_ADDRESS = #{memAddress,jdbcType=VARCHAR},
       </if>
-      <if test="memReceiveadd != null" >
+      <if test="memReceiveadd != null">
         MEM_RECEIVEADD = #{memReceiveadd,jdbcType=VARCHAR},
       </if>
-      <if test="memActivecode != null" >
+      <if test="memActivecode != null">
         MEM_ACTIVECODE = #{memActivecode,jdbcType=VARCHAR},
       </if>
-      <if test="memCondition != null" >
+      <if test="memCondition != null">
         MEM_CONDITION = #{memCondition,jdbcType=NUMERIC},
       </if>
-      <if test="memArtauth != null" >
+      <if test="memArtauth != null">
         MEM_ARTAUTH = #{memArtauth,jdbcType=NUMERIC},
       </if>
-      <if test="memMartname != null" >
+      <if test="memMartname != null">
         MEM_MARTNAME = #{memMartname,jdbcType=VARCHAR},
       </if>
-      <if test="memMartinfo != null" >
+      <if test="memMartinfo != null">
         MEM_MARTINFO = #{memMartinfo,jdbcType=VARCHAR},
       </if>
-      <if test="memRecommend != null" >
+      <if test="memRecommend != null">
         MEM_RECOMMEND = #{memRecommend,jdbcType=VARCHAR},
       </if>
-      <if test="memProfilepic != null" >
+      <if test="memProfilepic != null">
         MEM_PROFILEPIC = #{memProfilepic,jdbcType=BLOB},
       </if>
-      <if test="memMartcover != null" >
+      <if test="memMartcover != null">
         MEM_MARTCOVER = #{memMartcover,jdbcType=BLOB},
       </if>
     </set>
     where MEM_NO = #{memNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
     update MEMBER
     set MEM_ID = #{memId,jdbcType=VARCHAR},
       MEM_PSW = #{memPsw,jdbcType=VARCHAR},
@@ -492,7 +492,519 @@
       MEM_MARTCOVER = #{memMartcover,jdbcType=BLOB}
     where MEM_NO = #{memNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Member" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Member">
+    update MEMBER
+    set MEM_ID = #{memId,jdbcType=VARCHAR},
+      MEM_PSW = #{memPsw,jdbcType=VARCHAR},
+      MEM_EMAIL = #{memEmail,jdbcType=VARCHAR},
+      MEM_FBID = #{memFbid,jdbcType=VARCHAR},
+      MEM_NAME = #{memName,jdbcType=VARCHAR},
+      MEM_SEX = #{memSex,jdbcType=VARCHAR},
+      MEM_BIRTH = #{memBirth,jdbcType=TIMESTAMP},
+      MEM_MOBILE = #{memMobile,jdbcType=VARCHAR},
+      MEM_POST = #{memPost,jdbcType=VARCHAR},
+      MEM_ADDRESS = #{memAddress,jdbcType=VARCHAR},
+      MEM_RECEIVEADD = #{memReceiveadd,jdbcType=VARCHAR},
+      MEM_ACTIVECODE = #{memActivecode,jdbcType=VARCHAR},
+      MEM_CONDITION = #{memCondition,jdbcType=NUMERIC},
+      MEM_ARTAUTH = #{memArtauth,jdbcType=NUMERIC},
+      MEM_MARTNAME = #{memMartname,jdbcType=VARCHAR},
+      MEM_MARTINFO = #{memMartinfo,jdbcType=VARCHAR},
+      MEM_RECOMMEND = #{memRecommend,jdbcType=VARCHAR}
+    where MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Member">
+    <id column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+    <result column="MEM_ID" jdbcType="VARCHAR" property="memId" />
+    <result column="MEM_PSW" jdbcType="VARCHAR" property="memPsw" />
+    <result column="MEM_EMAIL" jdbcType="VARCHAR" property="memEmail" />
+    <result column="MEM_FBID" jdbcType="VARCHAR" property="memFbid" />
+    <result column="MEM_NAME" jdbcType="VARCHAR" property="memName" />
+    <result column="MEM_SEX" jdbcType="VARCHAR" property="memSex" />
+    <result column="MEM_BIRTH" jdbcType="TIMESTAMP" property="memBirth" />
+    <result column="MEM_MOBILE" jdbcType="VARCHAR" property="memMobile" />
+    <result column="MEM_POST" jdbcType="VARCHAR" property="memPost" />
+    <result column="MEM_ADDRESS" jdbcType="VARCHAR" property="memAddress" />
+    <result column="MEM_RECEIVEADD" jdbcType="VARCHAR" property="memReceiveadd" />
+    <result column="MEM_ACTIVECODE" jdbcType="VARCHAR" property="memActivecode" />
+    <result column="MEM_CONDITION" jdbcType="NUMERIC" property="memCondition" />
+    <result column="MEM_ARTAUTH" jdbcType="NUMERIC" property="memArtauth" />
+    <result column="MEM_MARTNAME" jdbcType="VARCHAR" property="memMartname" />
+    <result column="MEM_MARTINFO" jdbcType="VARCHAR" property="memMartinfo" />
+    <result column="MEM_RECOMMEND" jdbcType="VARCHAR" property="memRecommend" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.MemberWithBLOBs">
+    <result column="MEM_PROFILEPIC" jdbcType="BLOB" property="memProfilepic" />
+    <result column="MEM_MARTCOVER" jdbcType="BLOB" property="memMartcover" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MEM_NO, MEM_ID, MEM_PSW, MEM_EMAIL, MEM_FBID, MEM_NAME, MEM_SEX, MEM_BIRTH, MEM_MOBILE, 
+    MEM_POST, MEM_ADDRESS, MEM_RECEIVEADD, MEM_ACTIVECODE, MEM_CONDITION, MEM_ARTAUTH, 
+    MEM_MARTNAME, MEM_MARTINFO, MEM_RECOMMEND
+  </sql>
+  <sql id="Blob_Column_List">
+    MEM_PROFILEPIC, MEM_MARTCOVER
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from MEMBER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.MemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MEMBER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from MEMBER
+    where MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from MEMBER
+    where MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.MemberExample">
+    delete from MEMBER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
+    insert into MEMBER (MEM_NO, MEM_ID, MEM_PSW, 
+      MEM_EMAIL, MEM_FBID, MEM_NAME, 
+      MEM_SEX, MEM_BIRTH, MEM_MOBILE, 
+      MEM_POST, MEM_ADDRESS, MEM_RECEIVEADD, 
+      MEM_ACTIVECODE, MEM_CONDITION, MEM_ARTAUTH, 
+      MEM_MARTNAME, MEM_MARTINFO, MEM_RECOMMEND, 
+      MEM_PROFILEPIC, MEM_MARTCOVER)
+    values (#{memNo,jdbcType=VARCHAR}, #{memId,jdbcType=VARCHAR}, #{memPsw,jdbcType=VARCHAR}, 
+      #{memEmail,jdbcType=VARCHAR}, #{memFbid,jdbcType=VARCHAR}, #{memName,jdbcType=VARCHAR}, 
+      #{memSex,jdbcType=VARCHAR}, #{memBirth,jdbcType=TIMESTAMP}, #{memMobile,jdbcType=VARCHAR}, 
+      #{memPost,jdbcType=VARCHAR}, #{memAddress,jdbcType=VARCHAR}, #{memReceiveadd,jdbcType=VARCHAR}, 
+      #{memActivecode,jdbcType=VARCHAR}, #{memCondition,jdbcType=NUMERIC}, #{memArtauth,jdbcType=NUMERIC}, 
+      #{memMartname,jdbcType=VARCHAR}, #{memMartinfo,jdbcType=VARCHAR}, #{memRecommend,jdbcType=VARCHAR}, 
+      #{memProfilepic,jdbcType=BLOB}, #{memMartcover,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
+    insert into MEMBER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memNo != null">
+        MEM_NO,
+      </if>
+      <if test="memId != null">
+        MEM_ID,
+      </if>
+      <if test="memPsw != null">
+        MEM_PSW,
+      </if>
+      <if test="memEmail != null">
+        MEM_EMAIL,
+      </if>
+      <if test="memFbid != null">
+        MEM_FBID,
+      </if>
+      <if test="memName != null">
+        MEM_NAME,
+      </if>
+      <if test="memSex != null">
+        MEM_SEX,
+      </if>
+      <if test="memBirth != null">
+        MEM_BIRTH,
+      </if>
+      <if test="memMobile != null">
+        MEM_MOBILE,
+      </if>
+      <if test="memPost != null">
+        MEM_POST,
+      </if>
+      <if test="memAddress != null">
+        MEM_ADDRESS,
+      </if>
+      <if test="memReceiveadd != null">
+        MEM_RECEIVEADD,
+      </if>
+      <if test="memActivecode != null">
+        MEM_ACTIVECODE,
+      </if>
+      <if test="memCondition != null">
+        MEM_CONDITION,
+      </if>
+      <if test="memArtauth != null">
+        MEM_ARTAUTH,
+      </if>
+      <if test="memMartname != null">
+        MEM_MARTNAME,
+      </if>
+      <if test="memMartinfo != null">
+        MEM_MARTINFO,
+      </if>
+      <if test="memRecommend != null">
+        MEM_RECOMMEND,
+      </if>
+      <if test="memProfilepic != null">
+        MEM_PROFILEPIC,
+      </if>
+      <if test="memMartcover != null">
+        MEM_MARTCOVER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memNo != null">
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memId != null">
+        #{memId,jdbcType=VARCHAR},
+      </if>
+      <if test="memPsw != null">
+        #{memPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="memEmail != null">
+        #{memEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memFbid != null">
+        #{memFbid,jdbcType=VARCHAR},
+      </if>
+      <if test="memName != null">
+        #{memName,jdbcType=VARCHAR},
+      </if>
+      <if test="memSex != null">
+        #{memSex,jdbcType=VARCHAR},
+      </if>
+      <if test="memBirth != null">
+        #{memBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memMobile != null">
+        #{memMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memPost != null">
+        #{memPost,jdbcType=VARCHAR},
+      </if>
+      <if test="memAddress != null">
+        #{memAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="memReceiveadd != null">
+        #{memReceiveadd,jdbcType=VARCHAR},
+      </if>
+      <if test="memActivecode != null">
+        #{memActivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="memCondition != null">
+        #{memCondition,jdbcType=NUMERIC},
+      </if>
+      <if test="memArtauth != null">
+        #{memArtauth,jdbcType=NUMERIC},
+      </if>
+      <if test="memMartname != null">
+        #{memMartname,jdbcType=VARCHAR},
+      </if>
+      <if test="memMartinfo != null">
+        #{memMartinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="memRecommend != null">
+        #{memRecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="memProfilepic != null">
+        #{memProfilepic,jdbcType=BLOB},
+      </if>
+      <if test="memMartcover != null">
+        #{memMartcover,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.MemberExample" resultType="java.lang.Integer">
+    select count(*) from MEMBER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update MEMBER
+    <set>
+      <if test="record.memNo != null">
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memId != null">
+        MEM_ID = #{record.memId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memPsw != null">
+        MEM_PSW = #{record.memPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memEmail != null">
+        MEM_EMAIL = #{record.memEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memFbid != null">
+        MEM_FBID = #{record.memFbid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memName != null">
+        MEM_NAME = #{record.memName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memSex != null">
+        MEM_SEX = #{record.memSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memBirth != null">
+        MEM_BIRTH = #{record.memBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memMobile != null">
+        MEM_MOBILE = #{record.memMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memPost != null">
+        MEM_POST = #{record.memPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memAddress != null">
+        MEM_ADDRESS = #{record.memAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memReceiveadd != null">
+        MEM_RECEIVEADD = #{record.memReceiveadd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memActivecode != null">
+        MEM_ACTIVECODE = #{record.memActivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memCondition != null">
+        MEM_CONDITION = #{record.memCondition,jdbcType=NUMERIC},
+      </if>
+      <if test="record.memArtauth != null">
+        MEM_ARTAUTH = #{record.memArtauth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.memMartname != null">
+        MEM_MARTNAME = #{record.memMartname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memMartinfo != null">
+        MEM_MARTINFO = #{record.memMartinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memRecommend != null">
+        MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memProfilepic != null">
+        MEM_PROFILEPIC = #{record.memProfilepic,jdbcType=BLOB},
+      </if>
+      <if test="record.memMartcover != null">
+        MEM_MARTCOVER = #{record.memMartcover,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update MEMBER
+    set MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      MEM_ID = #{record.memId,jdbcType=VARCHAR},
+      MEM_PSW = #{record.memPsw,jdbcType=VARCHAR},
+      MEM_EMAIL = #{record.memEmail,jdbcType=VARCHAR},
+      MEM_FBID = #{record.memFbid,jdbcType=VARCHAR},
+      MEM_NAME = #{record.memName,jdbcType=VARCHAR},
+      MEM_SEX = #{record.memSex,jdbcType=VARCHAR},
+      MEM_BIRTH = #{record.memBirth,jdbcType=TIMESTAMP},
+      MEM_MOBILE = #{record.memMobile,jdbcType=VARCHAR},
+      MEM_POST = #{record.memPost,jdbcType=VARCHAR},
+      MEM_ADDRESS = #{record.memAddress,jdbcType=VARCHAR},
+      MEM_RECEIVEADD = #{record.memReceiveadd,jdbcType=VARCHAR},
+      MEM_ACTIVECODE = #{record.memActivecode,jdbcType=VARCHAR},
+      MEM_CONDITION = #{record.memCondition,jdbcType=NUMERIC},
+      MEM_ARTAUTH = #{record.memArtauth,jdbcType=NUMERIC},
+      MEM_MARTNAME = #{record.memMartname,jdbcType=VARCHAR},
+      MEM_MARTINFO = #{record.memMartinfo,jdbcType=VARCHAR},
+      MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR},
+      MEM_PROFILEPIC = #{record.memProfilepic,jdbcType=BLOB},
+      MEM_MARTCOVER = #{record.memMartcover,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update MEMBER
+    set MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      MEM_ID = #{record.memId,jdbcType=VARCHAR},
+      MEM_PSW = #{record.memPsw,jdbcType=VARCHAR},
+      MEM_EMAIL = #{record.memEmail,jdbcType=VARCHAR},
+      MEM_FBID = #{record.memFbid,jdbcType=VARCHAR},
+      MEM_NAME = #{record.memName,jdbcType=VARCHAR},
+      MEM_SEX = #{record.memSex,jdbcType=VARCHAR},
+      MEM_BIRTH = #{record.memBirth,jdbcType=TIMESTAMP},
+      MEM_MOBILE = #{record.memMobile,jdbcType=VARCHAR},
+      MEM_POST = #{record.memPost,jdbcType=VARCHAR},
+      MEM_ADDRESS = #{record.memAddress,jdbcType=VARCHAR},
+      MEM_RECEIVEADD = #{record.memReceiveadd,jdbcType=VARCHAR},
+      MEM_ACTIVECODE = #{record.memActivecode,jdbcType=VARCHAR},
+      MEM_CONDITION = #{record.memCondition,jdbcType=NUMERIC},
+      MEM_ARTAUTH = #{record.memArtauth,jdbcType=NUMERIC},
+      MEM_MARTNAME = #{record.memMartname,jdbcType=VARCHAR},
+      MEM_MARTINFO = #{record.memMartinfo,jdbcType=VARCHAR},
+      MEM_RECOMMEND = #{record.memRecommend,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
+    update MEMBER
+    <set>
+      <if test="memId != null">
+        MEM_ID = #{memId,jdbcType=VARCHAR},
+      </if>
+      <if test="memPsw != null">
+        MEM_PSW = #{memPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="memEmail != null">
+        MEM_EMAIL = #{memEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memFbid != null">
+        MEM_FBID = #{memFbid,jdbcType=VARCHAR},
+      </if>
+      <if test="memName != null">
+        MEM_NAME = #{memName,jdbcType=VARCHAR},
+      </if>
+      <if test="memSex != null">
+        MEM_SEX = #{memSex,jdbcType=VARCHAR},
+      </if>
+      <if test="memBirth != null">
+        MEM_BIRTH = #{memBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memMobile != null">
+        MEM_MOBILE = #{memMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memPost != null">
+        MEM_POST = #{memPost,jdbcType=VARCHAR},
+      </if>
+      <if test="memAddress != null">
+        MEM_ADDRESS = #{memAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="memReceiveadd != null">
+        MEM_RECEIVEADD = #{memReceiveadd,jdbcType=VARCHAR},
+      </if>
+      <if test="memActivecode != null">
+        MEM_ACTIVECODE = #{memActivecode,jdbcType=VARCHAR},
+      </if>
+      <if test="memCondition != null">
+        MEM_CONDITION = #{memCondition,jdbcType=NUMERIC},
+      </if>
+      <if test="memArtauth != null">
+        MEM_ARTAUTH = #{memArtauth,jdbcType=NUMERIC},
+      </if>
+      <if test="memMartname != null">
+        MEM_MARTNAME = #{memMartname,jdbcType=VARCHAR},
+      </if>
+      <if test="memMartinfo != null">
+        MEM_MARTINFO = #{memMartinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="memRecommend != null">
+        MEM_RECOMMEND = #{memRecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="memProfilepic != null">
+        MEM_PROFILEPIC = #{memProfilepic,jdbcType=BLOB},
+      </if>
+      <if test="memMartcover != null">
+        MEM_MARTCOVER = #{memMartcover,jdbcType=BLOB},
+      </if>
+    </set>
+    where MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.MemberWithBLOBs">
+    update MEMBER
+    set MEM_ID = #{memId,jdbcType=VARCHAR},
+      MEM_PSW = #{memPsw,jdbcType=VARCHAR},
+      MEM_EMAIL = #{memEmail,jdbcType=VARCHAR},
+      MEM_FBID = #{memFbid,jdbcType=VARCHAR},
+      MEM_NAME = #{memName,jdbcType=VARCHAR},
+      MEM_SEX = #{memSex,jdbcType=VARCHAR},
+      MEM_BIRTH = #{memBirth,jdbcType=TIMESTAMP},
+      MEM_MOBILE = #{memMobile,jdbcType=VARCHAR},
+      MEM_POST = #{memPost,jdbcType=VARCHAR},
+      MEM_ADDRESS = #{memAddress,jdbcType=VARCHAR},
+      MEM_RECEIVEADD = #{memReceiveadd,jdbcType=VARCHAR},
+      MEM_ACTIVECODE = #{memActivecode,jdbcType=VARCHAR},
+      MEM_CONDITION = #{memCondition,jdbcType=NUMERIC},
+      MEM_ARTAUTH = #{memArtauth,jdbcType=NUMERIC},
+      MEM_MARTNAME = #{memMartname,jdbcType=VARCHAR},
+      MEM_MARTINFO = #{memMartinfo,jdbcType=VARCHAR},
+      MEM_RECOMMEND = #{memRecommend,jdbcType=VARCHAR},
+      MEM_PROFILEPIC = #{memProfilepic,jdbcType=BLOB},
+      MEM_MARTCOVER = #{memMartcover,jdbcType=BLOB}
+    where MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Member">
     update MEMBER
     set MEM_ID = #{memId,jdbcType=VARCHAR},
       MEM_PSW = #{memPsw,jdbcType=VARCHAR},

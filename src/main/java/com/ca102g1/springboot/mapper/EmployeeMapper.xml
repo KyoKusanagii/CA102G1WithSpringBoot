@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.EmployeeMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Employee" >
-    <id column="EMP_NO" property="empNo" jdbcType="VARCHAR" />
-    <result column="EMP_ID" property="empId" jdbcType="VARCHAR" />
-    <result column="EMP_PWD" property="empPwd" jdbcType="VARCHAR" />
-    <result column="EMP_NAME" property="empName" jdbcType="VARCHAR" />
-    <result column="EMP_STATUS" property="empStatus" jdbcType="NUMERIC" />
-    <result column="EMP_MEM_AUTH" property="empMemAuth" jdbcType="NUMERIC" />
-    <result column="EMP_CAROUSEL_AUTH" property="empCarouselAuth" jdbcType="NUMERIC" />
-    <result column="EMP_REPORT_AUTH" property="empReportAuth" jdbcType="NUMERIC" />
-    <result column="EMP_CHAT_AUTH" property="empChatAuth" jdbcType="NUMERIC" />
-    <result column="EMP_LEVEL" property="empLevel" jdbcType="NUMERIC" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Employee">
+    <id column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+    <result column="EMP_ID" jdbcType="VARCHAR" property="empId" />
+    <result column="EMP_PWD" jdbcType="VARCHAR" property="empPwd" />
+    <result column="EMP_NAME" jdbcType="VARCHAR" property="empName" />
+    <result column="EMP_STATUS" jdbcType="NUMERIC" property="empStatus" />
+    <result column="EMP_MEM_AUTH" jdbcType="NUMERIC" property="empMemAuth" />
+    <result column="EMP_CAROUSEL_AUTH" jdbcType="NUMERIC" property="empCarouselAuth" />
+    <result column="EMP_REPORT_AUTH" jdbcType="NUMERIC" property="empReportAuth" />
+    <result column="EMP_CHAT_AUTH" jdbcType="NUMERIC" property="empChatAuth" />
+    <result column="EMP_LEVEL" jdbcType="NUMERIC" property="empLevel" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Employee" extends="BaseResultMap" >
-    <result column="EMP_ICON" property="empIcon" jdbcType="BLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Employee">
+    <result column="EMP_ICON" jdbcType="BLOB" property="empIcon" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -45,25 +45,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -74,44 +74,44 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     EMP_NO, EMP_ID, EMP_PWD, EMP_NAME, EMP_STATUS, EMP_MEM_AUTH, EMP_CAROUSEL_AUTH, EMP_REPORT_AUTH, 
     EMP_CHAT_AUTH, EMP_LEVEL
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     EMP_ICON
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.EmployeeExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from EMPLOYEE
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.EmployeeExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from EMPLOYEE
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -119,17 +119,17 @@
     from EMPLOYEE
     where EMP_NO = #{empNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from EMPLOYEE
     where EMP_NO = #{empNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample">
     delete from EMPLOYEE
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.Employee" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Employee">
     insert into EMPLOYEE (EMP_NO, EMP_ID, EMP_PWD, 
       EMP_NAME, EMP_STATUS, EMP_MEM_AUTH, 
       EMP_CAROUSEL_AUTH, EMP_REPORT_AUTH, EMP_CHAT_AUTH, 
@@ -139,127 +139,127 @@
       #{empCarouselAuth,jdbcType=NUMERIC}, #{empReportAuth,jdbcType=NUMERIC}, #{empChatAuth,jdbcType=NUMERIC}, 
       #{empLevel,jdbcType=NUMERIC}, #{empIcon,jdbcType=BLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Employee" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Employee">
     insert into EMPLOYEE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="empNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empNo != null">
         EMP_NO,
       </if>
-      <if test="empId != null" >
+      <if test="empId != null">
         EMP_ID,
       </if>
-      <if test="empPwd != null" >
+      <if test="empPwd != null">
         EMP_PWD,
       </if>
-      <if test="empName != null" >
+      <if test="empName != null">
         EMP_NAME,
       </if>
-      <if test="empStatus != null" >
+      <if test="empStatus != null">
         EMP_STATUS,
       </if>
-      <if test="empMemAuth != null" >
+      <if test="empMemAuth != null">
         EMP_MEM_AUTH,
       </if>
-      <if test="empCarouselAuth != null" >
+      <if test="empCarouselAuth != null">
         EMP_CAROUSEL_AUTH,
       </if>
-      <if test="empReportAuth != null" >
+      <if test="empReportAuth != null">
         EMP_REPORT_AUTH,
       </if>
-      <if test="empChatAuth != null" >
+      <if test="empChatAuth != null">
         EMP_CHAT_AUTH,
       </if>
-      <if test="empLevel != null" >
+      <if test="empLevel != null">
         EMP_LEVEL,
       </if>
-      <if test="empIcon != null" >
+      <if test="empIcon != null">
         EMP_ICON,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="empNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empNo != null">
         #{empNo,jdbcType=VARCHAR},
       </if>
-      <if test="empId != null" >
+      <if test="empId != null">
         #{empId,jdbcType=VARCHAR},
       </if>
-      <if test="empPwd != null" >
+      <if test="empPwd != null">
         #{empPwd,jdbcType=VARCHAR},
       </if>
-      <if test="empName != null" >
+      <if test="empName != null">
         #{empName,jdbcType=VARCHAR},
       </if>
-      <if test="empStatus != null" >
+      <if test="empStatus != null">
         #{empStatus,jdbcType=NUMERIC},
       </if>
-      <if test="empMemAuth != null" >
+      <if test="empMemAuth != null">
         #{empMemAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empCarouselAuth != null" >
+      <if test="empCarouselAuth != null">
         #{empCarouselAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empReportAuth != null" >
+      <if test="empReportAuth != null">
         #{empReportAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empChatAuth != null" >
+      <if test="empChatAuth != null">
         #{empChatAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empLevel != null" >
+      <if test="empLevel != null">
         #{empLevel,jdbcType=NUMERIC},
       </if>
-      <if test="empIcon != null" >
+      <if test="empIcon != null">
         #{empIcon,jdbcType=BLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultType="java.lang.Integer">
     select count(*) from EMPLOYEE
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update EMPLOYEE
-    <set >
-      <if test="record.empNo != null" >
+    <set>
+      <if test="record.empNo != null">
         EMP_NO = #{record.empNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.empId != null" >
+      <if test="record.empId != null">
         EMP_ID = #{record.empId,jdbcType=VARCHAR},
       </if>
-      <if test="record.empPwd != null" >
+      <if test="record.empPwd != null">
         EMP_PWD = #{record.empPwd,jdbcType=VARCHAR},
       </if>
-      <if test="record.empName != null" >
+      <if test="record.empName != null">
         EMP_NAME = #{record.empName,jdbcType=VARCHAR},
       </if>
-      <if test="record.empStatus != null" >
+      <if test="record.empStatus != null">
         EMP_STATUS = #{record.empStatus,jdbcType=NUMERIC},
       </if>
-      <if test="record.empMemAuth != null" >
+      <if test="record.empMemAuth != null">
         EMP_MEM_AUTH = #{record.empMemAuth,jdbcType=NUMERIC},
       </if>
-      <if test="record.empCarouselAuth != null" >
+      <if test="record.empCarouselAuth != null">
         EMP_CAROUSEL_AUTH = #{record.empCarouselAuth,jdbcType=NUMERIC},
       </if>
-      <if test="record.empReportAuth != null" >
+      <if test="record.empReportAuth != null">
         EMP_REPORT_AUTH = #{record.empReportAuth,jdbcType=NUMERIC},
       </if>
-      <if test="record.empChatAuth != null" >
+      <if test="record.empChatAuth != null">
         EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
       </if>
-      <if test="record.empLevel != null" >
+      <if test="record.empLevel != null">
         EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC},
       </if>
-      <if test="record.empIcon != null" >
+      <if test="record.empIcon != null">
         EMP_ICON = #{record.empIcon,jdbcType=BLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update EMPLOYEE
     set EMP_NO = #{record.empNo,jdbcType=VARCHAR},
       EMP_ID = #{record.empId,jdbcType=VARCHAR},
@@ -272,11 +272,11 @@
       EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
       EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC},
       EMP_ICON = #{record.empIcon,jdbcType=BLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update EMPLOYEE
     set EMP_NO = #{record.empNo,jdbcType=VARCHAR},
       EMP_ID = #{record.empId,jdbcType=VARCHAR},
@@ -288,47 +288,47 @@
       EMP_REPORT_AUTH = #{record.empReportAuth,jdbcType=NUMERIC},
       EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
       EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Employee" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Employee">
     update EMPLOYEE
-    <set >
-      <if test="empId != null" >
+    <set>
+      <if test="empId != null">
         EMP_ID = #{empId,jdbcType=VARCHAR},
       </if>
-      <if test="empPwd != null" >
+      <if test="empPwd != null">
         EMP_PWD = #{empPwd,jdbcType=VARCHAR},
       </if>
-      <if test="empName != null" >
+      <if test="empName != null">
         EMP_NAME = #{empName,jdbcType=VARCHAR},
       </if>
-      <if test="empStatus != null" >
+      <if test="empStatus != null">
         EMP_STATUS = #{empStatus,jdbcType=NUMERIC},
       </if>
-      <if test="empMemAuth != null" >
+      <if test="empMemAuth != null">
         EMP_MEM_AUTH = #{empMemAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empCarouselAuth != null" >
+      <if test="empCarouselAuth != null">
         EMP_CAROUSEL_AUTH = #{empCarouselAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empReportAuth != null" >
+      <if test="empReportAuth != null">
         EMP_REPORT_AUTH = #{empReportAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empChatAuth != null" >
+      <if test="empChatAuth != null">
         EMP_CHAT_AUTH = #{empChatAuth,jdbcType=NUMERIC},
       </if>
-      <if test="empLevel != null" >
+      <if test="empLevel != null">
         EMP_LEVEL = #{empLevel,jdbcType=NUMERIC},
       </if>
-      <if test="empIcon != null" >
+      <if test="empIcon != null">
         EMP_ICON = #{empIcon,jdbcType=BLOB},
       </if>
     </set>
     where EMP_NO = #{empNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Employee" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Employee">
     update EMPLOYEE
     set EMP_ID = #{empId,jdbcType=VARCHAR},
       EMP_PWD = #{empPwd,jdbcType=VARCHAR},
@@ -342,7 +342,361 @@
       EMP_ICON = #{empIcon,jdbcType=BLOB}
     where EMP_NO = #{empNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Employee" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Employee">
+    update EMPLOYEE
+    set EMP_ID = #{empId,jdbcType=VARCHAR},
+      EMP_PWD = #{empPwd,jdbcType=VARCHAR},
+      EMP_NAME = #{empName,jdbcType=VARCHAR},
+      EMP_STATUS = #{empStatus,jdbcType=NUMERIC},
+      EMP_MEM_AUTH = #{empMemAuth,jdbcType=NUMERIC},
+      EMP_CAROUSEL_AUTH = #{empCarouselAuth,jdbcType=NUMERIC},
+      EMP_REPORT_AUTH = #{empReportAuth,jdbcType=NUMERIC},
+      EMP_CHAT_AUTH = #{empChatAuth,jdbcType=NUMERIC},
+      EMP_LEVEL = #{empLevel,jdbcType=NUMERIC}
+    where EMP_NO = #{empNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Employee">
+    <id column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+    <result column="EMP_ID" jdbcType="VARCHAR" property="empId" />
+    <result column="EMP_PWD" jdbcType="VARCHAR" property="empPwd" />
+    <result column="EMP_NAME" jdbcType="VARCHAR" property="empName" />
+    <result column="EMP_STATUS" jdbcType="NUMERIC" property="empStatus" />
+    <result column="EMP_MEM_AUTH" jdbcType="NUMERIC" property="empMemAuth" />
+    <result column="EMP_CAROUSEL_AUTH" jdbcType="NUMERIC" property="empCarouselAuth" />
+    <result column="EMP_REPORT_AUTH" jdbcType="NUMERIC" property="empReportAuth" />
+    <result column="EMP_CHAT_AUTH" jdbcType="NUMERIC" property="empChatAuth" />
+    <result column="EMP_LEVEL" jdbcType="NUMERIC" property="empLevel" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Employee">
+    <result column="EMP_ICON" jdbcType="BLOB" property="empIcon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EMP_NO, EMP_ID, EMP_PWD, EMP_NAME, EMP_STATUS, EMP_MEM_AUTH, EMP_CAROUSEL_AUTH, EMP_REPORT_AUTH, 
+    EMP_CHAT_AUTH, EMP_LEVEL
+  </sql>
+  <sql id="Blob_Column_List">
+    EMP_ICON
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EMPLOYEE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EMPLOYEE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EMPLOYEE
+    where EMP_NO = #{empNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EMPLOYEE
+    where EMP_NO = #{empNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample">
+    delete from EMPLOYEE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Employee">
+    insert into EMPLOYEE (EMP_NO, EMP_ID, EMP_PWD, 
+      EMP_NAME, EMP_STATUS, EMP_MEM_AUTH, 
+      EMP_CAROUSEL_AUTH, EMP_REPORT_AUTH, EMP_CHAT_AUTH, 
+      EMP_LEVEL, EMP_ICON)
+    values (#{empNo,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{empPwd,jdbcType=VARCHAR}, 
+      #{empName,jdbcType=VARCHAR}, #{empStatus,jdbcType=NUMERIC}, #{empMemAuth,jdbcType=NUMERIC}, 
+      #{empCarouselAuth,jdbcType=NUMERIC}, #{empReportAuth,jdbcType=NUMERIC}, #{empChatAuth,jdbcType=NUMERIC}, 
+      #{empLevel,jdbcType=NUMERIC}, #{empIcon,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Employee">
+    insert into EMPLOYEE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empNo != null">
+        EMP_NO,
+      </if>
+      <if test="empId != null">
+        EMP_ID,
+      </if>
+      <if test="empPwd != null">
+        EMP_PWD,
+      </if>
+      <if test="empName != null">
+        EMP_NAME,
+      </if>
+      <if test="empStatus != null">
+        EMP_STATUS,
+      </if>
+      <if test="empMemAuth != null">
+        EMP_MEM_AUTH,
+      </if>
+      <if test="empCarouselAuth != null">
+        EMP_CAROUSEL_AUTH,
+      </if>
+      <if test="empReportAuth != null">
+        EMP_REPORT_AUTH,
+      </if>
+      <if test="empChatAuth != null">
+        EMP_CHAT_AUTH,
+      </if>
+      <if test="empLevel != null">
+        EMP_LEVEL,
+      </if>
+      <if test="empIcon != null">
+        EMP_ICON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empNo != null">
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null">
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="empPwd != null">
+        #{empPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null">
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empStatus != null">
+        #{empStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="empMemAuth != null">
+        #{empMemAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empCarouselAuth != null">
+        #{empCarouselAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empReportAuth != null">
+        #{empReportAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empChatAuth != null">
+        #{empChatAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empLevel != null">
+        #{empLevel,jdbcType=NUMERIC},
+      </if>
+      <if test="empIcon != null">
+        #{empIcon,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.EmployeeExample" resultType="java.lang.Integer">
+    select count(*) from EMPLOYEE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update EMPLOYEE
+    <set>
+      <if test="record.empNo != null">
+        EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empId != null">
+        EMP_ID = #{record.empId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empPwd != null">
+        EMP_PWD = #{record.empPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empName != null">
+        EMP_NAME = #{record.empName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empStatus != null">
+        EMP_STATUS = #{record.empStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empMemAuth != null">
+        EMP_MEM_AUTH = #{record.empMemAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empCarouselAuth != null">
+        EMP_CAROUSEL_AUTH = #{record.empCarouselAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empReportAuth != null">
+        EMP_REPORT_AUTH = #{record.empReportAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empChatAuth != null">
+        EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empLevel != null">
+        EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC},
+      </if>
+      <if test="record.empIcon != null">
+        EMP_ICON = #{record.empIcon,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update EMPLOYEE
+    set EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      EMP_ID = #{record.empId,jdbcType=VARCHAR},
+      EMP_PWD = #{record.empPwd,jdbcType=VARCHAR},
+      EMP_NAME = #{record.empName,jdbcType=VARCHAR},
+      EMP_STATUS = #{record.empStatus,jdbcType=NUMERIC},
+      EMP_MEM_AUTH = #{record.empMemAuth,jdbcType=NUMERIC},
+      EMP_CAROUSEL_AUTH = #{record.empCarouselAuth,jdbcType=NUMERIC},
+      EMP_REPORT_AUTH = #{record.empReportAuth,jdbcType=NUMERIC},
+      EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
+      EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC},
+      EMP_ICON = #{record.empIcon,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update EMPLOYEE
+    set EMP_NO = #{record.empNo,jdbcType=VARCHAR},
+      EMP_ID = #{record.empId,jdbcType=VARCHAR},
+      EMP_PWD = #{record.empPwd,jdbcType=VARCHAR},
+      EMP_NAME = #{record.empName,jdbcType=VARCHAR},
+      EMP_STATUS = #{record.empStatus,jdbcType=NUMERIC},
+      EMP_MEM_AUTH = #{record.empMemAuth,jdbcType=NUMERIC},
+      EMP_CAROUSEL_AUTH = #{record.empCarouselAuth,jdbcType=NUMERIC},
+      EMP_REPORT_AUTH = #{record.empReportAuth,jdbcType=NUMERIC},
+      EMP_CHAT_AUTH = #{record.empChatAuth,jdbcType=NUMERIC},
+      EMP_LEVEL = #{record.empLevel,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Employee">
+    update EMPLOYEE
+    <set>
+      <if test="empId != null">
+        EMP_ID = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="empPwd != null">
+        EMP_PWD = #{empPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null">
+        EMP_NAME = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empStatus != null">
+        EMP_STATUS = #{empStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="empMemAuth != null">
+        EMP_MEM_AUTH = #{empMemAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empCarouselAuth != null">
+        EMP_CAROUSEL_AUTH = #{empCarouselAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empReportAuth != null">
+        EMP_REPORT_AUTH = #{empReportAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empChatAuth != null">
+        EMP_CHAT_AUTH = #{empChatAuth,jdbcType=NUMERIC},
+      </if>
+      <if test="empLevel != null">
+        EMP_LEVEL = #{empLevel,jdbcType=NUMERIC},
+      </if>
+      <if test="empIcon != null">
+        EMP_ICON = #{empIcon,jdbcType=BLOB},
+      </if>
+    </set>
+    where EMP_NO = #{empNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Employee">
+    update EMPLOYEE
+    set EMP_ID = #{empId,jdbcType=VARCHAR},
+      EMP_PWD = #{empPwd,jdbcType=VARCHAR},
+      EMP_NAME = #{empName,jdbcType=VARCHAR},
+      EMP_STATUS = #{empStatus,jdbcType=NUMERIC},
+      EMP_MEM_AUTH = #{empMemAuth,jdbcType=NUMERIC},
+      EMP_CAROUSEL_AUTH = #{empCarouselAuth,jdbcType=NUMERIC},
+      EMP_REPORT_AUTH = #{empReportAuth,jdbcType=NUMERIC},
+      EMP_CHAT_AUTH = #{empChatAuth,jdbcType=NUMERIC},
+      EMP_LEVEL = #{empLevel,jdbcType=NUMERIC},
+      EMP_ICON = #{empIcon,jdbcType=BLOB}
+    where EMP_NO = #{empNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Employee">
     update EMPLOYEE
     set EMP_ID = #{empId,jdbcType=VARCHAR},
       EMP_PWD = #{empPwd,jdbcType=VARCHAR},

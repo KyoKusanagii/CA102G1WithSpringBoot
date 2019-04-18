@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.FbOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.FbOrder" >
-    <id column="FB_ORDER_NO" property="fbOrderNo" jdbcType="VARCHAR" />
-    <result column="FB_BUYER_NO" property="fbBuyerNo" jdbcType="VARCHAR" />
-    <result column="FB_ORDER_TIME" property="fbOrderTime" jdbcType="TIMESTAMP" />
-    <result column="FB_ORDER_PRC" property="fbOrderPrc" jdbcType="NUMERIC" />
-    <result column="FB_ORDER_TRANS" property="fbOrderTrans" jdbcType="VARCHAR" />
-    <result column="FB_ORDER_STATUS" property="fbOrderStatus" jdbcType="VARCHAR" />
-    <result column="FB_PAY_STATUS" property="fbPayStatus" jdbcType="VARCHAR" />
-    <result column="FB_ORDER_REMARK" property="fbOrderRemark" jdbcType="VARCHAR" />
-    <result column="FB_TRANSPORT" property="fbTransport" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.FbOrderMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.FbOrder">
+    <id column="FB_ORDER_NO" jdbcType="VARCHAR" property="fbOrderNo" />
+    <result column="FB_BUYER_NO" jdbcType="VARCHAR" property="fbBuyerNo" />
+    <result column="FB_ORDER_TIME" jdbcType="TIMESTAMP" property="fbOrderTime" />
+    <result column="FB_ORDER_PRC" jdbcType="NUMERIC" property="fbOrderPrc" />
+    <result column="FB_ORDER_TRANS" jdbcType="VARCHAR" property="fbOrderTrans" />
+    <result column="FB_ORDER_STATUS" jdbcType="VARCHAR" property="fbOrderStatus" />
+    <result column="FB_PAY_STATUS" jdbcType="VARCHAR" property="fbPayStatus" />
+    <result column="FB_ORDER_REMARK" jdbcType="VARCHAR" property="fbOrderRemark" />
+    <result column="FB_TRANSPORT" jdbcType="VARCHAR" property="fbTransport" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -41,25 +41,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -70,41 +70,41 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     FB_ORDER_NO, FB_BUYER_NO, FB_ORDER_TIME, FB_ORDER_PRC, FB_ORDER_TRANS, FB_ORDER_STATUS, 
     FB_PAY_STATUS, FB_ORDER_REMARK, FB_TRANSPORT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.FbOrderExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from FB_ORDER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from FB_ORDER
     where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from FB_ORDER
     where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample">
     delete from FB_ORDER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.FbOrder" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.FbOrder">
     insert into FB_ORDER (FB_ORDER_NO, FB_BUYER_NO, FB_ORDER_TIME, 
       FB_ORDER_PRC, FB_ORDER_TRANS, FB_ORDER_STATUS, 
       FB_PAY_STATUS, FB_ORDER_REMARK, FB_TRANSPORT
@@ -114,109 +114,109 @@
       #{fbPayStatus,jdbcType=VARCHAR}, #{fbOrderRemark,jdbcType=VARCHAR}, #{fbTransport,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.FbOrder" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.FbOrder">
     insert into FB_ORDER
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="fbOrderNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fbOrderNo != null">
         FB_ORDER_NO,
       </if>
-      <if test="fbBuyerNo != null" >
+      <if test="fbBuyerNo != null">
         FB_BUYER_NO,
       </if>
-      <if test="fbOrderTime != null" >
+      <if test="fbOrderTime != null">
         FB_ORDER_TIME,
       </if>
-      <if test="fbOrderPrc != null" >
+      <if test="fbOrderPrc != null">
         FB_ORDER_PRC,
       </if>
-      <if test="fbOrderTrans != null" >
+      <if test="fbOrderTrans != null">
         FB_ORDER_TRANS,
       </if>
-      <if test="fbOrderStatus != null" >
+      <if test="fbOrderStatus != null">
         FB_ORDER_STATUS,
       </if>
-      <if test="fbPayStatus != null" >
+      <if test="fbPayStatus != null">
         FB_PAY_STATUS,
       </if>
-      <if test="fbOrderRemark != null" >
+      <if test="fbOrderRemark != null">
         FB_ORDER_REMARK,
       </if>
-      <if test="fbTransport != null" >
+      <if test="fbTransport != null">
         FB_TRANSPORT,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="fbOrderNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fbOrderNo != null">
         #{fbOrderNo,jdbcType=VARCHAR},
       </if>
-      <if test="fbBuyerNo != null" >
+      <if test="fbBuyerNo != null">
         #{fbBuyerNo,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderTime != null" >
+      <if test="fbOrderTime != null">
         #{fbOrderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="fbOrderPrc != null" >
+      <if test="fbOrderPrc != null">
         #{fbOrderPrc,jdbcType=NUMERIC},
       </if>
-      <if test="fbOrderTrans != null" >
+      <if test="fbOrderTrans != null">
         #{fbOrderTrans,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderStatus != null" >
+      <if test="fbOrderStatus != null">
         #{fbOrderStatus,jdbcType=VARCHAR},
       </if>
-      <if test="fbPayStatus != null" >
+      <if test="fbPayStatus != null">
         #{fbPayStatus,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderRemark != null" >
+      <if test="fbOrderRemark != null">
         #{fbOrderRemark,jdbcType=VARCHAR},
       </if>
-      <if test="fbTransport != null" >
+      <if test="fbTransport != null">
         #{fbTransport,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" resultType="java.lang.Integer">
     select count(*) from FB_ORDER
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update FB_ORDER
-    <set >
-      <if test="record.fbOrderNo != null" >
+    <set>
+      <if test="record.fbOrderNo != null">
         FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbBuyerNo != null" >
+      <if test="record.fbBuyerNo != null">
         FB_BUYER_NO = #{record.fbBuyerNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbOrderTime != null" >
+      <if test="record.fbOrderTime != null">
         FB_ORDER_TIME = #{record.fbOrderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.fbOrderPrc != null" >
+      <if test="record.fbOrderPrc != null">
         FB_ORDER_PRC = #{record.fbOrderPrc,jdbcType=NUMERIC},
       </if>
-      <if test="record.fbOrderTrans != null" >
+      <if test="record.fbOrderTrans != null">
         FB_ORDER_TRANS = #{record.fbOrderTrans,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbOrderStatus != null" >
+      <if test="record.fbOrderStatus != null">
         FB_ORDER_STATUS = #{record.fbOrderStatus,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbPayStatus != null" >
+      <if test="record.fbPayStatus != null">
         FB_PAY_STATUS = #{record.fbPayStatus,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbOrderRemark != null" >
+      <if test="record.fbOrderRemark != null">
         FB_ORDER_REMARK = #{record.fbOrderRemark,jdbcType=VARCHAR},
       </if>
-      <if test="record.fbTransport != null" >
+      <if test="record.fbTransport != null">
         FB_TRANSPORT = #{record.fbTransport,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update FB_ORDER
     set FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
       FB_BUYER_NO = #{record.fbBuyerNo,jdbcType=VARCHAR},
@@ -227,41 +227,313 @@
       FB_PAY_STATUS = #{record.fbPayStatus,jdbcType=VARCHAR},
       FB_ORDER_REMARK = #{record.fbOrderRemark,jdbcType=VARCHAR},
       FB_TRANSPORT = #{record.fbTransport,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.FbOrder" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.FbOrder">
     update FB_ORDER
-    <set >
-      <if test="fbBuyerNo != null" >
+    <set>
+      <if test="fbBuyerNo != null">
         FB_BUYER_NO = #{fbBuyerNo,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderTime != null" >
+      <if test="fbOrderTime != null">
         FB_ORDER_TIME = #{fbOrderTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="fbOrderPrc != null" >
+      <if test="fbOrderPrc != null">
         FB_ORDER_PRC = #{fbOrderPrc,jdbcType=NUMERIC},
       </if>
-      <if test="fbOrderTrans != null" >
+      <if test="fbOrderTrans != null">
         FB_ORDER_TRANS = #{fbOrderTrans,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderStatus != null" >
+      <if test="fbOrderStatus != null">
         FB_ORDER_STATUS = #{fbOrderStatus,jdbcType=VARCHAR},
       </if>
-      <if test="fbPayStatus != null" >
+      <if test="fbPayStatus != null">
         FB_PAY_STATUS = #{fbPayStatus,jdbcType=VARCHAR},
       </if>
-      <if test="fbOrderRemark != null" >
+      <if test="fbOrderRemark != null">
         FB_ORDER_REMARK = #{fbOrderRemark,jdbcType=VARCHAR},
       </if>
-      <if test="fbTransport != null" >
+      <if test="fbTransport != null">
         FB_TRANSPORT = #{fbTransport,jdbcType=VARCHAR},
       </if>
     </set>
     where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.FbOrder" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.FbOrder">
+    update FB_ORDER
+    set FB_BUYER_NO = #{fbBuyerNo,jdbcType=VARCHAR},
+      FB_ORDER_TIME = #{fbOrderTime,jdbcType=TIMESTAMP},
+      FB_ORDER_PRC = #{fbOrderPrc,jdbcType=NUMERIC},
+      FB_ORDER_TRANS = #{fbOrderTrans,jdbcType=VARCHAR},
+      FB_ORDER_STATUS = #{fbOrderStatus,jdbcType=VARCHAR},
+      FB_PAY_STATUS = #{fbPayStatus,jdbcType=VARCHAR},
+      FB_ORDER_REMARK = #{fbOrderRemark,jdbcType=VARCHAR},
+      FB_TRANSPORT = #{fbTransport,jdbcType=VARCHAR}
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.FbOrder">
+    <id column="FB_ORDER_NO" jdbcType="VARCHAR" property="fbOrderNo" />
+    <result column="FB_BUYER_NO" jdbcType="VARCHAR" property="fbBuyerNo" />
+    <result column="FB_ORDER_TIME" jdbcType="TIMESTAMP" property="fbOrderTime" />
+    <result column="FB_ORDER_PRC" jdbcType="NUMERIC" property="fbOrderPrc" />
+    <result column="FB_ORDER_TRANS" jdbcType="VARCHAR" property="fbOrderTrans" />
+    <result column="FB_ORDER_STATUS" jdbcType="VARCHAR" property="fbOrderStatus" />
+    <result column="FB_PAY_STATUS" jdbcType="VARCHAR" property="fbPayStatus" />
+    <result column="FB_ORDER_REMARK" jdbcType="VARCHAR" property="fbOrderRemark" />
+    <result column="FB_TRANSPORT" jdbcType="VARCHAR" property="fbTransport" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FB_ORDER_NO, FB_BUYER_NO, FB_ORDER_TIME, FB_ORDER_PRC, FB_ORDER_TRANS, FB_ORDER_STATUS, 
+    FB_PAY_STATUS, FB_ORDER_REMARK, FB_TRANSPORT
+  </sql>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from FB_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FB_ORDER
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FB_ORDER
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample">
+    delete from FB_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.FbOrder">
+    insert into FB_ORDER (FB_ORDER_NO, FB_BUYER_NO, FB_ORDER_TIME, 
+      FB_ORDER_PRC, FB_ORDER_TRANS, FB_ORDER_STATUS, 
+      FB_PAY_STATUS, FB_ORDER_REMARK, FB_TRANSPORT
+      )
+    values (#{fbOrderNo,jdbcType=VARCHAR}, #{fbBuyerNo,jdbcType=VARCHAR}, #{fbOrderTime,jdbcType=TIMESTAMP}, 
+      #{fbOrderPrc,jdbcType=NUMERIC}, #{fbOrderTrans,jdbcType=VARCHAR}, #{fbOrderStatus,jdbcType=VARCHAR}, 
+      #{fbPayStatus,jdbcType=VARCHAR}, #{fbOrderRemark,jdbcType=VARCHAR}, #{fbTransport,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.FbOrder">
+    insert into FB_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fbOrderNo != null">
+        FB_ORDER_NO,
+      </if>
+      <if test="fbBuyerNo != null">
+        FB_BUYER_NO,
+      </if>
+      <if test="fbOrderTime != null">
+        FB_ORDER_TIME,
+      </if>
+      <if test="fbOrderPrc != null">
+        FB_ORDER_PRC,
+      </if>
+      <if test="fbOrderTrans != null">
+        FB_ORDER_TRANS,
+      </if>
+      <if test="fbOrderStatus != null">
+        FB_ORDER_STATUS,
+      </if>
+      <if test="fbPayStatus != null">
+        FB_PAY_STATUS,
+      </if>
+      <if test="fbOrderRemark != null">
+        FB_ORDER_REMARK,
+      </if>
+      <if test="fbTransport != null">
+        FB_TRANSPORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fbOrderNo != null">
+        #{fbOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fbBuyerNo != null">
+        #{fbBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderTime != null">
+        #{fbOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fbOrderPrc != null">
+        #{fbOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="fbOrderTrans != null">
+        #{fbOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderStatus != null">
+        #{fbOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fbPayStatus != null">
+        #{fbPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderRemark != null">
+        #{fbOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fbTransport != null">
+        #{fbTransport,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.FbOrderExample" resultType="java.lang.Integer">
+    select count(*) from FB_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update FB_ORDER
+    <set>
+      <if test="record.fbOrderNo != null">
+        FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbBuyerNo != null">
+        FB_BUYER_NO = #{record.fbBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbOrderTime != null">
+        FB_ORDER_TIME = #{record.fbOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fbOrderPrc != null">
+        FB_ORDER_PRC = #{record.fbOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fbOrderTrans != null">
+        FB_ORDER_TRANS = #{record.fbOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbOrderStatus != null">
+        FB_ORDER_STATUS = #{record.fbOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbPayStatus != null">
+        FB_PAY_STATUS = #{record.fbPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbOrderRemark != null">
+        FB_ORDER_REMARK = #{record.fbOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbTransport != null">
+        FB_TRANSPORT = #{record.fbTransport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update FB_ORDER
+    set FB_ORDER_NO = #{record.fbOrderNo,jdbcType=VARCHAR},
+      FB_BUYER_NO = #{record.fbBuyerNo,jdbcType=VARCHAR},
+      FB_ORDER_TIME = #{record.fbOrderTime,jdbcType=TIMESTAMP},
+      FB_ORDER_PRC = #{record.fbOrderPrc,jdbcType=NUMERIC},
+      FB_ORDER_TRANS = #{record.fbOrderTrans,jdbcType=VARCHAR},
+      FB_ORDER_STATUS = #{record.fbOrderStatus,jdbcType=VARCHAR},
+      FB_PAY_STATUS = #{record.fbPayStatus,jdbcType=VARCHAR},
+      FB_ORDER_REMARK = #{record.fbOrderRemark,jdbcType=VARCHAR},
+      FB_TRANSPORT = #{record.fbTransport,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.FbOrder">
+    update FB_ORDER
+    <set>
+      <if test="fbBuyerNo != null">
+        FB_BUYER_NO = #{fbBuyerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderTime != null">
+        FB_ORDER_TIME = #{fbOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fbOrderPrc != null">
+        FB_ORDER_PRC = #{fbOrderPrc,jdbcType=NUMERIC},
+      </if>
+      <if test="fbOrderTrans != null">
+        FB_ORDER_TRANS = #{fbOrderTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderStatus != null">
+        FB_ORDER_STATUS = #{fbOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fbPayStatus != null">
+        FB_PAY_STATUS = #{fbPayStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fbOrderRemark != null">
+        FB_ORDER_REMARK = #{fbOrderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fbTransport != null">
+        FB_TRANSPORT = #{fbTransport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FB_ORDER_NO = #{fbOrderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.FbOrder">
     update FB_ORDER
     set FB_BUYER_NO = #{fbBuyerNo,jdbcType=VARCHAR},
       FB_ORDER_TIME = #{fbOrderTime,jdbcType=TIMESTAMP},

@@ -10,7 +10,7 @@ public interface CarouselMapper {
 
     int deleteByExample(CarouselExample example);
 
-    int deleteByPrimaryKey(Long carouselNo);
+    int deleteByPrimaryKey(Integer carouselNo);
 
     int insert(Carousel record);
 
@@ -20,7 +20,7 @@ public interface CarouselMapper {
 
     List<Carousel> selectByExample(CarouselExample example);
 
-    Carousel selectByPrimaryKey(Long carouselNo);
+    Carousel selectByPrimaryKey(Integer carouselNo);
 
     int updateByExampleSelective(@Param("record") Carousel record, @Param("example") CarouselExample example);
 

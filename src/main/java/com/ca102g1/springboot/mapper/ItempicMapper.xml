@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ca102g1.springboot.mapper.ItempicMapper" >
-  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Itempic" >
-    <id column="ITEM_PIC_NO" property="itemPicNo" jdbcType="VARCHAR" />
-    <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ca102g1.springboot.mapper.ItempicMapper">
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Itempic">
+    <id column="ITEM_PIC_NO" jdbcType="VARCHAR" property="itemPicNo" />
+    <result column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Itempic" extends="BaseResultMap" >
-    <result column="ITEM_PIC" property="itemPic" jdbcType="BLOB" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Itempic">
+    <result column="ITEM_PIC" jdbcType="BLOB" property="itemPic" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -37,25 +37,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -66,43 +66,43 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     ITEM_PIC_NO, ITEM_NO
   </sql>
-  <sql id="Blob_Column_List" >
+  <sql id="Blob_Column_List">
     ITEM_PIC
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ca102g1.springboot.model.ItempicExample" >
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ItempicExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from ITEMPIC
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ca102g1.springboot.model.ItempicExample" >
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from ITEMPIC
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -110,106 +110,319 @@
     from ITEMPIC
     where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ITEMPIC
     where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" >
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItempicExample">
     delete from ITEMPIC
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ca102g1.springboot.model.Itempic" >
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Itempic">
     insert into ITEMPIC (ITEM_PIC_NO, ITEM_NO, ITEM_PIC
       )
     values (#{itemPicNo,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{itemPic,jdbcType=BLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Itempic" >
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Itempic">
     insert into ITEMPIC
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="itemPicNo != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemPicNo != null">
         ITEM_PIC_NO,
       </if>
-      <if test="itemNo != null" >
+      <if test="itemNo != null">
         ITEM_NO,
       </if>
-      <if test="itemPic != null" >
+      <if test="itemPic != null">
         ITEM_PIC,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="itemPicNo != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemPicNo != null">
         #{itemPicNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemNo != null" >
+      <if test="itemNo != null">
         #{itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemPic != null" >
+      <if test="itemPic != null">
         #{itemPic,jdbcType=BLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" resultType="java.lang.Integer">
     select count(*) from ITEMPIC
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update ITEMPIC
-    <set >
-      <if test="record.itemPicNo != null" >
+    <set>
+      <if test="record.itemPicNo != null">
         ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemNo != null" >
+      <if test="record.itemNo != null">
         ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemPic != null" >
+      <if test="record.itemPic != null">
         ITEM_PIC = #{record.itemPic,jdbcType=BLOB},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update ITEMPIC
     set ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
       ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
       ITEM_PIC = #{record.itemPic,jdbcType=BLOB}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update ITEMPIC
     set ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
       ITEM_NO = #{record.itemNo,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Itempic" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Itempic">
     update ITEMPIC
-    <set >
-      <if test="itemNo != null" >
+    <set>
+      <if test="itemNo != null">
         ITEM_NO = #{itemNo,jdbcType=VARCHAR},
       </if>
-      <if test="itemPic != null" >
+      <if test="itemPic != null">
         ITEM_PIC = #{itemPic,jdbcType=BLOB},
       </if>
     </set>
     where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Itempic" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Itempic">
     update ITEMPIC
     set ITEM_NO = #{itemNo,jdbcType=VARCHAR},
       ITEM_PIC = #{itemPic,jdbcType=BLOB}
     where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Itempic" >
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Itempic">
+    update ITEMPIC
+    set ITEM_NO = #{itemNo,jdbcType=VARCHAR}
+    where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.Itempic">
+    <id column="ITEM_PIC_NO" jdbcType="VARCHAR" property="itemPicNo" />
+    <result column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ca102g1.springboot.model.Itempic">
+    <result column="ITEM_PIC" jdbcType="BLOB" property="itemPic" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ITEM_PIC_NO, ITEM_NO
+  </sql>
+  <sql id="Blob_Column_List">
+    ITEM_PIC
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ca102g1.springboot.model.ItempicExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ITEMPIC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ITEMPIC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ITEMPIC
+    where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ITEMPIC
+    where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.ItempicExample">
+    delete from ITEMPIC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.Itempic">
+    insert into ITEMPIC (ITEM_PIC_NO, ITEM_NO, ITEM_PIC
+      )
+    values (#{itemPicNo,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{itemPic,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.Itempic">
+    insert into ITEMPIC
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemPicNo != null">
+        ITEM_PIC_NO,
+      </if>
+      <if test="itemNo != null">
+        ITEM_NO,
+      </if>
+      <if test="itemPic != null">
+        ITEM_PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemPicNo != null">
+        #{itemPicNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null">
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPic != null">
+        #{itemPic,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.ItempicExample" resultType="java.lang.Integer">
+    select count(*) from ITEMPIC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ITEMPIC
+    <set>
+      <if test="record.itemPicNo != null">
+        ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemNo != null">
+        ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemPic != null">
+        ITEM_PIC = #{record.itemPic,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ITEMPIC
+    set ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR},
+      ITEM_PIC = #{record.itemPic,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ITEMPIC
+    set ITEM_PIC_NO = #{record.itemPicNo,jdbcType=VARCHAR},
+      ITEM_NO = #{record.itemNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ca102g1.springboot.model.Itempic">
+    update ITEMPIC
+    <set>
+      <if test="itemNo != null">
+        ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPic != null">
+        ITEM_PIC = #{itemPic,jdbcType=BLOB},
+      </if>
+    </set>
+    where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ca102g1.springboot.model.Itempic">
+    update ITEMPIC
+    set ITEM_NO = #{itemNo,jdbcType=VARCHAR},
+      ITEM_PIC = #{itemPic,jdbcType=BLOB}
+    where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ca102g1.springboot.model.Itempic">
     update ITEMPIC
     set ITEM_NO = #{itemNo,jdbcType=VARCHAR}
     where ITEM_PIC_NO = #{itemPicNo,jdbcType=VARCHAR}

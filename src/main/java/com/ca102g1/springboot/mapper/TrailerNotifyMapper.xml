@@ -283,4 +283,286 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.TrailerNotifyKey">
+    <id column="TRAILER_NO" jdbcType="VARCHAR" property="trailerNo" />
+    <id column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TRAILER_NO, MEM_NO
+  </sql>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    delete from TRAILER_NOTIFY
+    where TRAILER_NO = #{trailerNo,jdbcType=VARCHAR}
+      and MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample">
+    delete from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    insert into TRAILER_NOTIFY (TRAILER_NO, MEM_NO)
+    values (#{trailerNo,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    insert into TRAILER_NOTIFY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="trailerNo != null">
+        TRAILER_NO,
+      </if>
+      <if test="memNo != null">
+        MEM_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="trailerNo != null">
+        #{trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null">
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample" resultType="java.lang.Integer">
+    select count(*) from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRAILER_NOTIFY
+    <set>
+      <if test="record.trailerNo != null">
+        TRAILER_NO = #{record.trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null">
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRAILER_NOTIFY
+    set TRAILER_NO = #{record.trailerNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.ca102g1.springboot.model.TrailerNotifyKey">
+    <id column="TRAILER_NO" jdbcType="VARCHAR" property="trailerNo" />
+    <id column="MEM_NO" jdbcType="VARCHAR" property="memNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TRAILER_NO, MEM_NO
+  </sql>
+  <select id="selectByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    delete from TRAILER_NOTIFY
+    where TRAILER_NO = #{trailerNo,jdbcType=VARCHAR}
+      and MEM_NO = #{memNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample">
+    delete from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    insert into TRAILER_NOTIFY (TRAILER_NO, MEM_NO)
+    values (#{trailerNo,jdbcType=VARCHAR}, #{memNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ca102g1.springboot.model.TrailerNotifyKey">
+    insert into TRAILER_NOTIFY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="trailerNo != null">
+        TRAILER_NO,
+      </if>
+      <if test="memNo != null">
+        MEM_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="trailerNo != null">
+        #{trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memNo != null">
+        #{memNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ca102g1.springboot.model.TrailerNotifyExample" resultType="java.lang.Integer">
+    select count(*) from TRAILER_NOTIFY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRAILER_NOTIFY
+    <set>
+      <if test="record.trailerNo != null">
+        TRAILER_NO = #{record.trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memNo != null">
+        MEM_NO = #{record.memNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRAILER_NOTIFY
+    set TRAILER_NO = #{record.trailerNo,jdbcType=VARCHAR},
+      MEM_NO = #{record.memNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
 </mapper>
