@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arti_reply.model.Arti_replyService;
-import com.article.model.ArticleService;
-import com.artireply_report.model.ArtiReplyReportService;
+import com.ca102g1.springboot.model.ArtiReply;
+import com.ca102g1.springboot.service.ArtiReplyReportDAO_interface;
+import com.ca102g1.springboot.service.Arti_replyDAO_interface;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,16 +24,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-//@WebServlet("/FrontEnd/forum/arti_reply.do")
 @Controller
-@RequestMapping("ArtiReply")
+@RequestMapping("/artiReply")
 public class Arti_replyServlet {
 
 	@Autowired
-    private Arti_replyService arti_replySvc;
+    private Arti_replyDAO_interface arti_replyDAO_interface;
 	@Autowired
-	private ArtiReplyReportService artireply_reportSvc;
+	private ArtiReplyReportDAO_interface artiReplyReportDAO_interface;
 
 	@RequestMapping(value = "/insert",method = RequestMethod.POST)
 	public String insert(@RequestParam("mem_no") String mem_no,
@@ -46,83 +47,50 @@ public class Arti_replyServlet {
 		if(!errorMsgs.isEmpty()){
 			return "article";
 		}
-
+		HttpServletRequest  req = ((ServletRequestAttributes)
+				RequestContextHolder.currentRequestAttributes()).getRequest();
+		try{
+			/***************************2.開始新增資料***************************************/
+			ArtiReply artiReply = new ArtiReply();
+			artiReply.setMemNo(mem_no);
+			artiReply.setArtiNo(arti_no);
+			artiReply.setRepContent(rep_content);
+			arti_replyDAO_interface.insert(artiReply);
+		 } catch (Exception e) {
+			errorMsgs.put("Exception",e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/FrontEnd/forum/forum.jsp");
+			failureView.forward(req, res);
+		}
 	}
 
 	@RequestMapping(value = "/delete",method = RequestMethod.POST)
 	public String insert(@RequestParam("arti_no") String arti_no,
 						 @RequestParam("rep_no") String rep_no,
 						 Model model){
-		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-		if(StringUtils.isBlank(rep_content)){
-			errorMsgs.put("rep_content","回覆內容請勿空白");
-		}
-		if(!errorMsgs.isEmpty()){
-			return "article";
-		}
+		HttpServletRequest  req = ((ServletRequestAttributes)
+				RequestContextHolder.currentRequestAttributes()).getRequest();
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		try {
 
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
-		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
-		System.out.println(action);
-		
-		if ("insert".equals(action)) { // 來自article.jsp的請求  
-			   
-
-			    /***************************2.開始新增資料***************************************/
-			    Arti_replyService arti_replySvc = new Arti_replyService();
-			    arti_replySvc.addRep(mem_no,rep_content, rep_time, arti_no);
-			    System.out.println("新增成功");
-			    
-			    /***************************3.新增完成,準備轉交(Send the Success view)***********/
-			    String url = req.getContextPath() + "/FrontEnd/forum/article.jsp?arti_no=" + arti_no;
-			    res.sendRedirect(url);
-			    
-			    /***************************其他可能的錯誤處理**********************************/
-			   } catch (Exception e) {
-			    errorMsgs.put("Exception",e.getMessage());
-			    RequestDispatcher failureView = req
-			      .getRequestDispatcher("/FrontEnd/forum/forum.jsp");
-			    failureView.forward(req, res);
-			   }
-			}
-		
-		
-		if ("delete".equals(action)) { // 來自article.jsp
-
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-	
-			try {
-				/***************************1.接收請求參數***************************************/
-				String arti_no = req.getParameter("arti_no");
-				Integer rep_no =Integer.parseInt(req.getParameter("rep_no"));
-				
-				/***************************2.開始刪除資料***************************************/
-				Arti_replyService arti_replySvc = new Arti_replyService();	
-				ArtiReplyReportService artireply_reportSvc = new ArtiReplyReportService();
-				arti_replySvc.deleteRep(arti_no, rep_no); //留言刪除
-				artireply_reportSvc.deleteArtiReplyReport(rep_no);	//刪除留言時順便刪除討論區檢舉的檢舉留言
-				System.out.println("刪除成功");
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = req.getContextPath() + "/FrontEnd/forum/article.jsp?arti_no=" + arti_no;
-				res.sendRedirect(url);
+			/***************************2.開始刪除資料***************************************/
+			arti_replyDAO_interface.delete(arti_no, rep_no); //留言刪除
+			artiReplyReportDAO_interface.delete(rep_no);	//刪除留言時順便刪除討論區檢舉的檢舉留言
+			System.out.println("刪除成功");
+			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			String url = req.getContextPath() + "/FrontEnd/forum/article.jsp?arti_no=" + arti_no;
+			res.sendRedirect(url);
 //				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 //				successView.forward(req, res);
-				
-				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/FrontEnd/forum/forum.jsp");
-				failureView.forward(req, res);
-			}
+
+			/***************************其他可能的錯誤處理**********************************/
+		} catch (Exception e) {
+			errorMsgs.add("刪除資料失敗:"+e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/FrontEnd/forum/forum.jsp");
+			failureView.forward(req, res);
 		}
-		
-		
 	}
 
 }

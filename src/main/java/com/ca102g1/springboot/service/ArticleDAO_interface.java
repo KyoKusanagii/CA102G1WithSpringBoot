@@ -1,16 +1,14 @@
 package com.ca102g1.springboot.service;
 
-import com.article.model.ArticleVO;
+import com.ca102g1.springboot.model.Article;
 
 import java.util.List;
 
 public interface ArticleDAO_interface {
-	public void insert(ArticleVO articleVO);
-	public void update(ArticleVO articleVO);
+	public void insert(Article article);
+	public void update(Article article);
 	public void delete(String arti_no);
-	public ArticleVO findByPrimaryKey(String arti_no);
-	public List<ArticleVO> getAll();
-	
-	
-	public List<ArticleVO> findByTopic(String arti_topic);
+	public Article findByPrimaryKey(String arti_no);
+	public List<Article> getAll();
+	public List<Article> findByTopic(String arti_topic);
 }

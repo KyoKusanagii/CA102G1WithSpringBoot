@@ -1,24 +1,25 @@
 package com.ca102g1.springboot.service;
 
-import com.android.model.BuyerOrderVO;
-import com.mallitem.model.MallItemVO;
+import com.android.model.BuyerOrder;
+import com.ca102g1.springboot.model.MallOrder;
+import com.mallitem.model.MallItem;
 
 import java.util.List;
 
 public interface MallOrderDAO_interface {
 	
-	public void insert(MallOrderVO mallOrderVO);
-	public void update(MallOrderVO mallOrderVO);
+	public void insert(MallOrder mallOrder);
+	public void update(MallOrder mallOrder);
 	public void delete(String mall_order_no);
-	public MallOrderVO findByPrimaryKey(String mall_order_no);
-	public List<MallOrderVO> getAll();
-	public List<BuyerOrderVO> getAllOrderItem(String mall_order_no);
-	public List<MallOrderVO> getMyMallOrder(String item_owner);
+	public MallOrder findByPrimaryKey(String mall_order_no);
+	public List<MallOrder> getAll();
+//	public List<BuyerOrder> getAllOrderItem(String mall_order_no);
+	public List<MallOrder> getMyMallOrder(String item_owner);
 	
 	//新增訂單及同時新增訂單細項
-	public void insertMallOrder(MallOrderVO mallOrderVO, List<MallItemVO> list);
+//	public void insertMallOrder(MallOrder mallOrder, List<MallItem> list);
 	//找一個會員的所有商城訂單(買家)
-	public List<MallOrderVO> getMyOrderForBuyer(String mall_buyer_no);
+	public List<MallOrder> getMyOrderForBuyer(String mall_buyer_no);
 	//找一張訂單的賣家編號
 	public String getOrderSeller(String mall_order_no);
 

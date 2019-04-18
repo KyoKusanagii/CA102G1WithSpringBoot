@@ -1,5 +1,12 @@
 package com.ca102g1.springboot.service.impl;
 
+import com.ca102g1.springboot.mapper.ArticleReportMapper;
+import com.ca102g1.springboot.mapper.ArtireplyReportMapper;
+import com.ca102g1.springboot.model.ArtiReply;
+import com.ca102g1.springboot.model.ArtireplyReportExample;
+import com.ca102g1.springboot.service.ArtiReplyReportDAO_interface;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -11,32 +18,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtiReplyReportDAO implements ArtiReplyReportDAO_interface{
+public class ArtiReplyReportDAO implements ArtiReplyReportDAO_interface {
+
+	@Autowired
+	ArtireplyReportMapper artireplyReportMapper;
 
 	
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
-		} catch(NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static final String INSERT_STMT = 
-	"INSERT INTO ARTIREPLY_REPORT(ARTIREPLY_REPORT_NO, MEM_NO, EMP_NO, ARTI_NO, REP_NO, REPORT_DESCRIPTION, REPORT_STATUS,REPORT_REASONS)" 
-	+ "VALUES('R'||LPAD(to_char(artireply_report_seq.NEXTVAL), 5,'0'), ? , ?, ?, ?, ?, ?, ?)";
-
-	private static final String UPDATE_STMT = "UPDATE ARTIREPLY_REPORT SET REPORT_STATUS = ? WHERE ARTIREPLY_REPORT_NO = ?";
-
-	private static final String DELETE_STMT = "DELETE FROM ARTIREPLY_REPORT WHERE REP_NO = ?";
-	
-	private static final String DELETE_STMT_ALL_REP = "DELETE FROM ARTIREPLY_REPORT WHERE ARTI_NO = ?";
-
-	private static final String FIND_BY_PK = "SELECT * FROM ARTIREPLY_REPORT WHERE ARTIREPLY_REPORT_NO = ?";
-
-	private static final String GET_ALL = "SELECT * FROM ARTIREPLY_REPORT ORDER BY ARTIREPLY_REPORT_NO";
+//	private static final String INSERT_STMT =
+//	"INSERT INTO ARTIREPLY_REPORT(ARTIREPLY_REPORT_NO, MEM_NO, EMP_NO, ARTI_NO, REP_NO, REPORT_DESCRIPTION, REPORT_STATUS,REPORT_REASONS)"
+//	+ "VALUES('R'||LPAD(to_char(artireply_report_seq.NEXTVAL), 5,'0'), ? , ?, ?, ?, ?, ?, ?)";
+//
+//	private static final String UPDATE_STMT = "UPDATE ARTIREPLY_REPORT SET REPORT_STATUS = ? WHERE ARTIREPLY_REPORT_NO = ?";
+//
+//	private static final String DELETE_STMT = "DELETE FROM ARTIREPLY_REPORT WHERE REP_NO = ?";
+//
+//	private static final String DELETE_STMT_ALL_REP = "DELETE FROM ARTIREPLY_REPORT WHERE ARTI_NO = ?";
+//
+//	private static final String FIND_BY_PK = "SELECT * FROM ARTIREPLY_REPORT WHERE ARTIREPLY_REPORT_NO = ?";
+//
+//	private static final String GET_ALL = "SELECT * FROM ARTIREPLY_REPORT ORDER BY ARTIREPLY_REPORT_NO";
 
 	
 
@@ -123,36 +123,12 @@ public class ArtiReplyReportDAO implements ArtiReplyReportDAO_interface{
 
 	@Override
 	public void delete(Integer artiReplyReportRepNo) {
-		Connection con = null;
-		PreparedStatement pstmt= null;
-		
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE_STMT);
-			pstmt.setInt(1,artiReplyReportRepNo);			
-			pstmt.executeUpdate();
-			
-			
+			artireplyReportMapper.deleteByPrimaryKey(artiReplyReportRepNo);
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
-		
 	}
 
 	@Override
@@ -259,37 +235,15 @@ public class ArtiReplyReportDAO implements ArtiReplyReportDAO_interface{
 	}
 
 	@Override
-	public void delete(String arti_no) {
-		Connection con = null;
-		PreparedStatement pstmt= null;
-		
+	public void deleteByArtiNo(String arti_no) {
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE_STMT_ALL_REP);
-			pstmt.setString(1,arti_no);			
-			pstmt.executeUpdate();
-			
-			
+			ArtireplyReportExample artireplyReportExample = new ArtireplyReportExample();
+			ArtireplyReportExample.Criteria cArtireplyReportExample = artireplyReportExample.createCriteria();
+			cArtireplyReportExample.andArtiNoEqualTo(arti_no)
+			artireplyReportMapper.deleteByExample(artireplyReportExample);
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
-	
-
 }

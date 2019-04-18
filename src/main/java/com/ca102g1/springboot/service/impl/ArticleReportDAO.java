@@ -1,5 +1,10 @@
 package com.ca102g1.springboot.service.impl;
 
+import com.ca102g1.springboot.mapper.ArticleReportMapper;
+import com.ca102g1.springboot.model.ArticleReportExample;
+import com.ca102g1.springboot.service.Article_reportDAO_interface;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,28 +18,21 @@ import java.util.List;
 
 public class ArticleReportDAO implements Article_reportDAO_interface {
 	
-	 private static DataSource ds = null;
-	 static {
-	  try {
-		  Context ctx = new InitialContext();
-		  ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
-	  	} catch (NamingException e) {
-		  e.printStackTrace();
-	  	}
-	 }
+	@Autowired
+	private ArticleReportMapper articleReportMapper;
 
 
-	private static final String INSERT_STMT = 
-	"INSERT INTO ARTICLE_REPORT(ARTICLE_REPORT_NO,MEM_NO,ARTI_NO,REPORT_DESCRIPTION,REPORT_STATUS,REPORT_REASONS)" + "VALUES(('R'||LPAD(to_char(article_report_seq.NEXTVAL), 5,'0')), ?, ?, ?, ?, ?)";
-	
-	private static final String UPDATE_STMT = 
-	"UPDATE ARTICLE_REPORT SET REPORT_STATUS = ? WHERE ARTICLE_REPORT_NO = ?";
-	
-	private static final String DELETE_STMT = "DELETE FROM ARTICLE_REPORT WHERE ARTI_NO = ?";
-	
-	private static final String FIND_BY_PK =  "SELECT * FROM ARTICLE_REPORT WHERE ARTICLE_REPORT_NO = ?";
-	
-	private static final String GET_ALL = "SELECT * FROM ARTICLE_REPORT ORDER BY ARTICLE_REPORT_NO";
+//	private static final String INSERT_STMT =
+//	"INSERT INTO ARTICLE_REPORT(ARTICLE_REPORT_NO,MEM_NO,ARTI_NO,REPORT_DESCRIPTION,REPORT_STATUS,REPORT_REASONS)" + "VALUES(('R'||LPAD(to_char(article_report_seq.NEXTVAL), 5,'0')), ?, ?, ?, ?, ?)";
+//
+//	private static final String UPDATE_STMT =
+//	"UPDATE ARTICLE_REPORT SET REPORT_STATUS = ? WHERE ARTICLE_REPORT_NO = ?";
+//
+//	private static final String DELETE_STMT = "DELETE FROM ARTICLE_REPORT WHERE ARTI_NO = ?";
+//
+//	private static final String FIND_BY_PK =  "SELECT * FROM ARTICLE_REPORT WHERE ARTICLE_REPORT_NO = ?";
+//
+//	private static final String GET_ALL = "SELECT * FROM ARTICLE_REPORT ORDER BY ARTICLE_REPORT_NO";
 
 	
 	@Override 
@@ -251,38 +249,15 @@ public class ArticleReportDAO implements Article_reportDAO_interface {
 	}
 
 	@Override
-	public void delete(String arti_no) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-	
-
+	public void deleteByArtiNo(String arti_no) {
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE_STMT);
-			pstmt.setString(1, arti_no);
-			pstmt.executeUpdate();
-			
-
+			ArticleReportExample articleReportExample = new ArticleReportExample();
+			ArticleReportExample.Criteria cArticleReportExampler= articleReportExample.createCriteria();
+			cArticleReportExampler.andArtiNoEqualTo(arti_no);
+			articleReportMapper.deleteByExample(articleReportExample);
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		 }
-	}
-	
+		}
 
-}
+	}

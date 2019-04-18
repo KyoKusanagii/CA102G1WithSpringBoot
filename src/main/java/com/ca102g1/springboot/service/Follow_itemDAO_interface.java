@@ -1,11 +1,13 @@
 package com.ca102g1.springboot.service;
 
+import com.ca102g1.springboot.model.FollowItem;
+
 import java.util.List;
 
 public interface Follow_itemDAO_interface {
-	public void insert(Follow_itemVO follow_itemVO);
+	public void insert(FollowItem follow_item);
 	public void delete(String mem_no, String item_no);
-	public Follow_itemVO findByPrimaryKey(String mem_no, String item_no);
+	public FollowItem findByPrimaryKey(String mem_no, String item_no);
 	//取得一個會員的所有關注商品
-	public List<Follow_itemVO> getAll(String mem_no);
+	public List<FollowItem> getAll(String mem_no);
 }

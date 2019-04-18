@@ -1,5 +1,6 @@
 package com.ca102g1.springboot.model;
 
+import java.util.Base64;
 import java.util.Date;
 
 public class LimitSale {
@@ -16,6 +17,15 @@ public class LimitSale {
     private Short saleStatus;
 
     private String saleRemark;
+
+    //以下非原生limitSale表格欄位, join item and itempic後出現
+    private byte[] itemPic;
+
+    private String itemOwner;
+
+    private String itemName;
+
+    private Integer itemPrice;
 
     public Long getSaleNo() {
         return saleNo;
@@ -72,4 +82,39 @@ public class LimitSale {
     public void setSaleRemark(String saleRemark) {
         this.saleRemark = saleRemark == null ? null : saleRemark.trim();
     }
+
+    public String getByteString() throws Exception {
+        if (itemPic != null) {
+            byte[] encodeBase64 = Base64.getEncoder().encode(itemPic);
+            String base64DataString = new String(encodeBase64 , "UTF-8");
+            return base64DataString;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = result + Integer.parseInt(itemNo.substring(1));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(!(obj instanceof LimitSale)  ) {
+            return false;
+        }else {
+            LimitSale lsVO = (LimitSale) obj;
+            if(this.getItemNo().equals(lsVO.getItemNo())) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
+
 }
