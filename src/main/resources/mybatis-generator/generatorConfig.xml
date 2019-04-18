@@ -4,7 +4,7 @@
      "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <!--指定jar驅動檔位置-->
-    <classPathEntry location="ojdbc8.jar"/>
+<!--    <classPathEntry location="ojdbc8.jar"/>-->
     <context id ="CA102G1" targetRuntime ="MyBatis3" >
         <commentGenerator>
             <property name ="suppressDate" value ="false" />
