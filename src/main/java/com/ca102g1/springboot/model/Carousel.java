@@ -1,7 +1,7 @@
 package com.ca102g1.springboot.model;
 
 public class Carousel {
-    private Long carouselNo;
+    private Integer carouselNo;
 
     private String carouselTitle;
 
@@ -9,11 +9,11 @@ public class Carousel {
 
     private byte[] carouselPic;
 
-    public Long getCarouselNo() {
+    public Integer getCarouselNo() {
         return carouselNo;
     }
 
-    public void setCarouselNo(Long carouselNo) {
+    public void setCarouselNo(Integer carouselNo) {
         this.carouselNo = carouselNo;
     }
 

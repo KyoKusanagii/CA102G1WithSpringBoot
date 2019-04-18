@@ -114,52 +114,52 @@ public class CarouselExample {
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoEqualTo(Long value) {
+        public Criteria andCarouselNoEqualTo(Integer value) {
             addCriterion("CAROUSEL_NO =", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoNotEqualTo(Long value) {
+        public Criteria andCarouselNoNotEqualTo(Integer value) {
             addCriterion("CAROUSEL_NO <>", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoGreaterThan(Long value) {
+        public Criteria andCarouselNoGreaterThan(Integer value) {
             addCriterion("CAROUSEL_NO >", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoGreaterThanOrEqualTo(Long value) {
+        public Criteria andCarouselNoGreaterThanOrEqualTo(Integer value) {
             addCriterion("CAROUSEL_NO >=", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoLessThan(Long value) {
+        public Criteria andCarouselNoLessThan(Integer value) {
             addCriterion("CAROUSEL_NO <", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoLessThanOrEqualTo(Long value) {
+        public Criteria andCarouselNoLessThanOrEqualTo(Integer value) {
             addCriterion("CAROUSEL_NO <=", value, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoIn(List<Long> values) {
+        public Criteria andCarouselNoIn(List<Integer> values) {
             addCriterion("CAROUSEL_NO in", values, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoNotIn(List<Long> values) {
+        public Criteria andCarouselNoNotIn(List<Integer> values) {
             addCriterion("CAROUSEL_NO not in", values, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoBetween(Long value1, Long value2) {
+        public Criteria andCarouselNoBetween(Integer value1, Integer value2) {
             addCriterion("CAROUSEL_NO between", value1, value2, "carouselNo");
             return (Criteria) this;
         }
 
-        public Criteria andCarouselNoNotBetween(Long value1, Long value2) {
+        public Criteria andCarouselNoNotBetween(Integer value1, Integer value2) {
             addCriterion("CAROUSEL_NO not between", value1, value2, "carouselNo");
             return (Criteria) this;
         }

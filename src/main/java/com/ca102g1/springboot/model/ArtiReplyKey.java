@@ -3,7 +3,7 @@ package com.ca102g1.springboot.model;
 public class ArtiReplyKey {
     private String artiNo;
 
-    private Long repNo;
+    private Integer repNo;
 
     public String getArtiNo() {
         return artiNo;
@@ -13,11 +13,11 @@ public class ArtiReplyKey {
         this.artiNo = artiNo == null ? null : artiNo.trim();
     }
 
-    public Long getRepNo() {
+    public Integer getRepNo() {
         return repNo;
     }
 
-    public void setRepNo(Long repNo) {
+    public void setRepNo(Integer repNo) {
         this.repNo = repNo;
     }
 }

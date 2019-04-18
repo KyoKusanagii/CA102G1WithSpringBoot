@@ -185,52 +185,52 @@ public class ArtiReplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andRepNoEqualTo(Long value) {
+        public Criteria andRepNoEqualTo(Integer value) {
             addCriterion("REP_NO =", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoNotEqualTo(Long value) {
+        public Criteria andRepNoNotEqualTo(Integer value) {
             addCriterion("REP_NO <>", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoGreaterThan(Long value) {
+        public Criteria andRepNoGreaterThan(Integer value) {
             addCriterion("REP_NO >", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoGreaterThanOrEqualTo(Long value) {
+        public Criteria andRepNoGreaterThanOrEqualTo(Integer value) {
             addCriterion("REP_NO >=", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoLessThan(Long value) {
+        public Criteria andRepNoLessThan(Integer value) {
             addCriterion("REP_NO <", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoLessThanOrEqualTo(Long value) {
+        public Criteria andRepNoLessThanOrEqualTo(Integer value) {
             addCriterion("REP_NO <=", value, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoIn(List<Long> values) {
+        public Criteria andRepNoIn(List<Integer> values) {
             addCriterion("REP_NO in", values, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoNotIn(List<Long> values) {
+        public Criteria andRepNoNotIn(List<Integer> values) {
             addCriterion("REP_NO not in", values, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoBetween(Long value1, Long value2) {
+        public Criteria andRepNoBetween(Integer value1, Integer value2) {
             addCriterion("REP_NO between", value1, value2, "repNo");
             return (Criteria) this;
         }
 
-        public Criteria andRepNoNotBetween(Long value1, Long value2) {
+        public Criteria andRepNoNotBetween(Integer value1, Integer value2) {
             addCriterion("REP_NO not between", value1, value2, "repNo");
             return (Criteria) this;
         }
